@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from src.Fish import Fish
+
 # General setup
 pygame.init()
 clock = pygame.time.Clock()
@@ -12,16 +14,40 @@ bg = pygame.transform.scale(bg, (screen_width, screen_height))
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Sprite Animation")
-screen.fill((0,0,0))
-screen.blit(bg,[0,0])
-pygame.display.flip()
+# screen.fill((0,0,0))
+# screen.blit(bg,[0,0])
+# pygame.display.flip()
 
-running = True
+# running = True
 
-while running:
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      running = False
+# while running:
+#   for event in pygame.event.get():
+#     if event.type == pygame.QUIT:
+#       running = False
+
+# # Creating the sprites and groups
+moving_sprites = pygame.sprite.Group()
+fish = Fish(10, 100)
+moving_sprites.add(fish)
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            fish.attack()
+
+    # Drawing
+    screen.fill((0, 90, 90))
+    screen.blit(bg,[0,0])
+    moving_sprites.draw(screen)
+    moving_sprites.update(0.05)
+    pygame.display.flip()
+    clock.tick(60)
+
+
 
 # class Player(pygame.sprite.Sprite):
 #     def __init__(self, pos_x, pos_y):
