@@ -1,5 +1,8 @@
 import pygame
 import sys
+import random
+
+from scipy import rand
 
 from src.Fish import Fish
 
@@ -29,9 +32,15 @@ pygame.display.set_caption("Sprite Animation")
 moving_sprites = pygame.sprite.Group()
 fish = Fish(10, 100)
 moving_sprites.add(fish)
-
+direction = 1
 
 while True:
+
+    direction *= -1
+    for fish in moving_sprites:
+        randPos = random.randint(0, 8) * direction 
+        fish.move(randPos, randPos)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -43,7 +52,11 @@ while True:
     screen.fill((0, 90, 90))
     screen.blit(bg,[0,0])
     moving_sprites.draw(screen)
-    moving_sprites.update(0.05)
+
+    
+
+    moving_sprites.update(0.15)
+    
     pygame.display.flip()
     clock.tick(60)
 
