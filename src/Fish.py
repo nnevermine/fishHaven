@@ -31,3 +31,6 @@ class Fish(pygame.sprite.Sprite):
 
         self.image = self.sprites[int(self.current_sprite)]
 
+    def move(self, x, y):
+        self.rect.x = x
+        self.rect.y = y
