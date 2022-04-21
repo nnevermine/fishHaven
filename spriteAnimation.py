@@ -2,7 +2,7 @@ import pygame
 import sys
 
 from src.Fish import Fish
-
+from src.Pond import Pond
 # General setup
 pygame.init()
 clock = pygame.time.Clock()
@@ -29,15 +29,22 @@ pygame.display.set_caption("Sprite Animation")
 moving_sprites = pygame.sprite.Group()
 fish = Fish(10, 100)
 moving_sprites.add(fish)
-
+start_ticks = None
+pond = Pond
 
 while True:
+    if start_ticks == None:
+        start_ticks = pygame.time.get_ticks()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
             fish.attack()
+    seconds = (pygame.time.get_ticks() - start_ticks) / 1000
+    if (seconds >= 1):
+        pond.update()
+        start_ticks = None
 
     # Drawing
     screen.fill((0, 90, 90))
