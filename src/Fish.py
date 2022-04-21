@@ -3,7 +3,7 @@ import sys
 from src.FishData import FishData
 
 class Fish(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, parent = None):
+    def __init__(self, pos_x, pos_y, genesis="sick-salmon", parent = None):
         super().__init__()
         self.attack_animation = False
         self.sprites = []
@@ -14,6 +14,7 @@ class Fish(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
+        self.in_pond_sec = 0
 
     def loadSprite(self, path):
         for i in range(1, 6):
@@ -35,11 +36,6 @@ class Fish(pygame.sprite.Sprite):
 
     def increasePheromone(self, n):
         self.fishData.pheromone += n
-        if self.fishData.pheromone > self.fishData.pheromoneThresh:
-            self.giveBirth()
-
-    def giveBirth(self):
-        self.fishData.genesis.spawnFish(self)
 
     def migrate(self):
         pass
@@ -51,5 +47,14 @@ class Fish(pygame.sprite.Sprite):
         return self.fishData.pheromone >= self.fishData.pheromoneThresh
 
     def updateLifeTime(self):
+        self.in_pond_sec += 1
         self.fishData.lifetime -= 1
+        if self.fishData.lifetime == 0:
+            self.fishData.status = "dead"
+
+    def resetPheromone(self):
+        self.fishData.pheromone = 0
+    
+    def getGenesis(self):
+        return self.fishData.genesis
 
