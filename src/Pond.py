@@ -6,8 +6,11 @@ from .Fish import Fish
 class Pond:
     def __init__(self):
         self.pondName = "Sick Salmon"
+        self.status = "alive"
         self.fishList = []
+        self.population=len(self.fishList)
         self.moving_sprites = pygame.sprite.Group()
+        self.all_moving_sprites=[]
 
     def addFish(self, fish):
         self.fishList.append(fish)
@@ -24,10 +27,11 @@ class Pond:
         screen = pygame.display.set_mode((1280, 720))
 
         bg = pygame.image.load("./assets/images/background/bg.jpg")
-        bg = pygame.transform.scale(bg, (1280, 720)) 
+        bg = pygame.transform.scale(bg, (1280, 720))
         pygame.display.set_caption("Fish Haven Project")
         clock = pygame.time.Clock()
         self.addFish(Fish(100,100))
+        self.addFish(Fish(200,200))
         
         
         running = True
@@ -38,33 +42,22 @@ class Pond:
                     running = False
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
-            self.moving_sprites.draw(screen)
-            
+            # self.moving_sprites.draw(screen)
+            # print(self.moving_sprites)
             
             for fish in self.moving_sprites:
-                if fish.rect.left <= 0 or fish.rect.left >= 1180:
-                    direction *= -1
-                    speed_x = random.randint(0, 4) * direction
-                    # speed_y = random.randint(0, 5) * direction
-                    fish.flipSprite()
-                    
-                    if speed_x == 0:
-                        speed_x = random.randint(2, 4) * direction
-
-
-                        # speed_y = random.randint(2, 5) * direction
-            
-                # if fish.rect.top <= 40 or fish.rect.top >= 620:
-                #     direction *= -1
-                #     speed_x = random.randint(0, 5) * direction
-                #     speed_y = random.randint(0, 5) * direction
-        
-                #     if speed_x == 0 and speed_y == 0:
-                #         speed_x = random.randint(2, 5) * direction
-                #         speed_y = random.randint(2, 5) * direction
-                    
                 fish.move(speed_x)
-                fish.update(0.15)
+
+                # if fish.rect.left <= 0 or fish.rect.left >= 1180:
+                #     direction *= -1
+                #     speed_x = random.randint(0, 4) * direction
+                #     # speed_y = random.randint(0, 5) * direction
+                #     fish.flipSprite()
+                    
+                #     if speed_x == 0:
+                #         speed_x = random.randint(2, 4) * direction
+                    
+                # fish.update(0.15)
                 screen.blit(fish.image, fish.rect)
             pygame.display.flip()
             clock.tick(60)

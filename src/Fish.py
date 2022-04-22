@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 
 class Fish(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
@@ -7,7 +8,8 @@ class Fish(pygame.sprite.Sprite):
         self.attack_animation = False
 
         self.direction = "RIGHT"
-        
+        self.face = 1
+
         self.sprites = [] #Main sprite
         self.leftSprite = []
         self.rightSprite = []
@@ -20,6 +22,7 @@ class Fish(pygame.sprite.Sprite):
         self.rect.topleft = [pos_x, pos_y]
         self.rect.left = pos_x
         self.rect.top = pos_y
+        self.rect.right = pos_x + 100
         self.attack_animation = True
         self.current_sprite = 0
         
@@ -27,12 +30,11 @@ class Fish(pygame.sprite.Sprite):
     def flipSprite(self):
         print("fllipflip")
 
-        if self.direction == "LEFT":
+        if self.face == 1:
             self.sprites=self.rightSprite
-            self.direction = "RIGHT"
-        else:
+        elif self.face == -1:
             self.sprites=self.leftSprite
-            self.direction = "LEFT"
+            
         self.current_sprite = 0
         
 
@@ -62,5 +64,21 @@ class Fish(pygame.sprite.Sprite):
         self.image = self.sprites[int(self.current_sprite)]
 
     def move(self, speed_x):
+
+        if self.rect.left <= 0:
+            print("chon left")
+            self.face = 1
+            print("x axis" + str(self.rect.left) + str(self.face))
+            self.flipSprite()
+        
+        elif self.rect.left >= 1180:
+            print("chon right")
+            self.face = -1
+            print("x axis" + str(self.rect.left)  + str(self.face))
+            self.flipSprite()
+
+        speed_x = random.randint(1, 5) * self.face
+
         self.rect.x += speed_x
         self.update(0.05)
+        
