@@ -8,7 +8,7 @@ class Pond:
         self.pondName = "Sick Salmon"
         self.status = "alive"
         self.fishList = []
-        self.population=len(self.fishList)
+        self.population = len(self.fishList)
         self.moving_sprites = pygame.sprite.Group()
         self.all_moving_sprites=[]
 
