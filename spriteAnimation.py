@@ -2,8 +2,6 @@ import pygame
 import sys
 import random
 
-from scipy import rand
-
 from src.Fish import Fish
 
 # General setup
