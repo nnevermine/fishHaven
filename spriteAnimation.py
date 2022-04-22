@@ -37,7 +37,7 @@ while True:
     direction *= -1
     for fish in moving_sprites:
         randPos = random.randint(0, 8) * direction 
-        fish.move(randPos, randPos)
+        fish.move(5)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
