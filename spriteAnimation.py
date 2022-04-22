@@ -2,19 +2,23 @@ import pygame
 import sys
 import random
 
-from src.Fish import Fish
+# from src.Fish import Fish
+from src.Pond import Pond
+
+pond = Pond()
+pond.run()
 
 # General setup
-pygame.init()
-clock = pygame.time.Clock()
-screen_width = 1280
-screen_height = 720
+# pygame.init()
+# clock = pygame.time.Clock()
+# screen_width = 1280
+# screen_height = 720
 
-bg = pygame.image.load("./assets/images/background/bg.jpg")
-bg = pygame.transform.scale(bg, (screen_width, screen_height)) 
+# bg = pygame.image.load("./assets/images/background/bg.jpg")
+# bg = pygame.transform.scale(bg, (screen_width, screen_height)) 
 
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Sprite Animation")
+# screen = pygame.display.set_mode((screen_width, screen_height))
+# pygame.display.set_caption("Sprite Animation")
 # screen.fill((0,0,0))
 # screen.blit(bg,[0,0])
 # pygame.display.flip()
@@ -27,36 +31,36 @@ pygame.display.set_caption("Sprite Animation")
 #       running = False
 
 # # Creating the sprites and groups
-moving_sprites = pygame.sprite.Group()
-fish = Fish(10, 100)
-moving_sprites.add(fish)
-direction = 1
+# moving_sprites = pygame.sprite.Group()
+# fish = Fish(10, 100)
+# moving_sprites.add(fish)
+# direction = 1
 
-while True:
+# while True:
 
-    direction *= -1
-    for fish in moving_sprites:
-        randPos = random.randint(0, 8) * direction 
-        fish.move(5)
+#     direction *= -1
+#     for fish in moving_sprites:
+#         randPos = random.randint(0, 8) * direction 
+#         fish.move(5)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:
-            fish.attack()
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             pygame.quit()
+#             sys.exit()
+#         if event.type == pygame.KEYDOWN:
+#             fish.attack()
 
-    # Drawing
-    screen.fill((0, 90, 90))
-    screen.blit(bg,[0,0])
-    moving_sprites.draw(screen)
+#     # Drawing
+#     screen.fill((0, 90, 90))
+#     screen.blit(bg,[0,0])
+#     moving_sprites.draw(screen)
 
     
 
-    moving_sprites.update(0.15)
+#     moving_sprites.update(0.15)
     
-    pygame.display.flip()
-    clock.tick(60)
+#     pygame.display.flip()
+#     clock.tick(60)
 
 
 
