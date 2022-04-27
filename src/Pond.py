@@ -1,24 +1,22 @@
 from src.Fish import Fish
+from run import Dashboard
 import random
 import pygame
+import pygame_menu
 import sys
 
 class Pond:
-    # def __init__(self):
-#         self.pondName = "Sick Salmon"
-#         self.status = "alive"
-#         self.fishList = []
-#         self.population = len(self.fishList)
-#         self.moving_sprites = pygame.sprite.Group()
-#         self.all_moving_sprites=[]
 
     def __init__(self):
         self.name = "sick-salmon"
         self.fishes = []
         self.moving_sprites = pygame.sprite.Group()
 
+
     def getPopulation(self):
         return len(self.fishes)
+    
+
 
     def spawnFish(self, parentFish = None):
         tempFish = Fish(100, 100, self.name, parentFish.getId())
@@ -80,10 +78,14 @@ class Pond:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        d = Dashboard(self.fishes)
+                        d.run()
+                    
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
-            # self.moving_sprites.draw(screen)
-            # print(self.moving_sprites)
+
             
             for fish in self.moving_sprites:
                 fish.move(speed_x)
