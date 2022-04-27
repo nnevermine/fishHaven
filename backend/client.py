@@ -13,11 +13,12 @@ with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as sock:
         fish = FishData.FishData("Sick Salmon","000000")
         msg =  pickle.dumps(fish)
         sock.send(msg)
+
         #receive response
         data = socket.recv(1024)
         # data_fish = pickle.loads(data)
 
-        
+
         if data.lower().strip() == 'bye':#len(data)<1024:
             # No more of msg
             print(data)

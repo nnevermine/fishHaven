@@ -8,6 +8,7 @@ def randId():
         index = math.floor(random.random() * 10)
 
     random_str += str(digits[index])
+    return random_str
 
 def randCrowdThresh():
     return random.randint(5, 20)
