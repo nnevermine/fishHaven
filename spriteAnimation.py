@@ -1,58 +1,72 @@
+
+   
 import pygame
 import sys
+import random
 
-from src.Fish import Fish
+# from src.Fish import Fish
 from src.Pond import Pond
-# General setup
-pygame.init()
-clock = pygame.time.Clock()
-screen_width = 1280
-screen_height = 720
 
-bg = pygame.image.load("./assets/images/background/bg.jpg")
-bg = pygame.transform.scale(bg, (screen_width, screen_height)) 
+pond = Pond()
+pond.run()
 
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Sprite Animation")
-# screen.fill((0,0,0))
-# screen.blit(bg,[0,0])
-# pygame.display.flip()
 
-# running = True
 
-# while running:
-#   for event in pygame.event.get():
-#     if event.type == pygame.QUIT:
-#       running = False
+# import pygame
+# import sys
 
-# # Creating the sprites and groups
-moving_sprites = pygame.sprite.Group()
-fish = Fish(10, 100)
-moving_sprites.add(fish)
-start_ticks = None
-pond = Pond
+# from src.Fish import Fish
+# from src.Pond import Pond
+# # General setup
+# pygame.init()
+# clock = pygame.time.Clock()
+# screen_width = 1280
+# screen_height = 720
 
-while True:
-    if start_ticks == None:
-        start_ticks = pygame.time.get_ticks()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:
-            fish.attack()
-    seconds = (pygame.time.get_ticks() - start_ticks) / 1000
-    if (seconds >= 1):
-        pond.update()
-        start_ticks = None
+# bg = pygame.image.load("./assets/images/background/bg.jpg")
+# bg = pygame.transform.scale(bg, (screen_width, screen_height)) 
 
-    # Drawing
-    screen.fill((0, 90, 90))
-    screen.blit(bg,[0,0])
-    moving_sprites.draw(screen)
-    moving_sprites.update(0.05)
-    pygame.display.flip()
-    clock.tick(60)
+# screen = pygame.display.set_mode((screen_width, screen_height))
+# pygame.display.set_caption("Sprite Animation")
+# # screen.fill((0,0,0))
+# # screen.blit(bg,[0,0])
+# # pygame.display.flip()
+
+# # running = True
+
+# # while running:
+# #   for event in pygame.event.get():
+# #     if event.type == pygame.QUIT:
+# #       running = False
+
+# # # Creating the sprites and groups
+# moving_sprites = pygame.sprite.Group()
+# fish = Fish(10, 100)
+# moving_sprites.add(fish)
+# start_ticks = None
+# pond = Pond
+
+# while True:
+#     if start_ticks == None:
+#         start_ticks = pygame.time.get_ticks()
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             pygame.quit()
+#             sys.exit()
+#         if event.type == pygame.KEYDOWN:
+#             fish.attack()
+#     seconds = (pygame.time.get_ticks() - start_ticks) / 1000
+#     if (seconds >= 1):
+#         pond.update()
+#         start_ticks = None
+
+#     # Drawing
+#     screen.fill((0, 90, 90))
+#     screen.blit(bg,[0,0])
+#     moving_sprites.draw(screen)
+#     moving_sprites.update(0.05)
+#     pygame.display.flip()
+#     clock.tick(60)
 
 
 

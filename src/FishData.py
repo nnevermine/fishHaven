@@ -3,11 +3,11 @@ import math
 
 def randId():
     digits = [i for i in range(0, 10)]
-    
+    random_str=""
     for i in range(6):
         index = math.floor(random.random() * 10)
-
-    random_str += str(digits[index])
+        random_str += str(digits[index])
+    return random_str
 
 def randCrowdThresh():
     return random.randint(5, 20)
@@ -16,7 +16,7 @@ def randPheromoneThresh():
     return random.randint(30, 60)
 
 class FishData:
-    def __init__(self, genesis, parentId):
+    def __init__(self, genesis, parentId=None):
         self.id = randId()
         self.state = "in-pond"
         self.status = "alive"
