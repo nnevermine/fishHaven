@@ -5,11 +5,21 @@ import random
 class Fish(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__()
-        self.attack_animation = False
+        #attributes
+        self.id = ""
+        self.state = "in-pond"
+        self.status = "alive"
+        self.genesis="sick salmon"
+        self.crowdThreshold = "xx/xx"
+        self.pheromoneLevel = "xx/xx"
+        self.lifetime = 5
+        self.relation = ""
 
+        
+        #swimming controller
         self.direction = "RIGHT"
         self.face = 1
-
+        self.attack_animation = False
         self.sprites = [] #Main sprite
         self.leftSprite = []
         self.rightSprite = []
