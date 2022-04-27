@@ -1,9 +1,15 @@
 from src.Fish import Fish
-from run import Dashboard
+# from run import Dashboard
+from dashboard import Dashboard
 import random
 import pygame
 import pygame_menu
 import sys
+from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton, QScrollArea,QApplication,
+                             QHBoxLayout, QVBoxLayout, QMainWindow)
+from PyQt5.QtCore import Qt, QSize
+from PyQt5 import QtWidgets, uic, QtGui
+
 
 class Pond:
 
@@ -80,8 +86,11 @@ class Pond:
                     running = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
+                        print(self.fishes[0].getId())
+                        app = QApplication(sys.argv)
                         d = Dashboard(self.fishes)
-                        d.run()
+                        app.exec_()
+                        
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
