@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton, Q
                              QHBoxLayout, QVBoxLayout, QMainWindow)
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic, QtGui
-
+import threading
 
 class Pond:
 
@@ -108,7 +108,9 @@ class Pond:
                         print(self.fishes[0].getId())
                         app = QApplication(sys.argv)
                         d = Dashboard(self.fishes)
-                        app.exec_()
+                        pond_handler = threading.Thread(target=app.exec_)
+                        pond_handler.start()
+
                         
                     
             screen.fill((0, 0, 0))
