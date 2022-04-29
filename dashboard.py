@@ -22,12 +22,23 @@ class Dashboard(QMainWindow):
         self.vbox = QVBoxLayout()               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
         self.grid = QGridLayout()
 
-        temp = ["Fish ID: 123", "State: In Pond", "Status: alive", "Genesis: Sick-Salmon", "Crowd Threshold: 5/10", "Pheromone Level: 4/5", "Lifetime: 30/60"]
-
-        for i in range(0,5):
-            for j in range(0,3):
-                # self.grid.addWidget(QPushButton(str(i)+str(j)),i,j)
-                self.grid.addWidget(FishFrame(temp, self.widget), i, j)
+        # temp = ["Fish ID: 123", "State: In Pond", "Status: alive", "Genesis: Sick-Salmon", "Crowd Threshold: 5/10", "Pheromone Level: 4/5", "Lifetime: 30/60"]
+        print(self.fished[0].getFishData().getGenesis())
+        num = len(self.fished)
+        j=0
+        temp=0
+        i=0
+        for r in range(0,num): 
+            print("out", i, temp, j)
+            while j < 2 and i < num:       
+                print("here", i, temp, j)
+                info = [self.fished[i].getFishData().getId(), self.fished[i].getFishData().getState(), self.fished[i].getFishData().getStatus(), self.fished[i].getFishData().getGenesis()]
+                self.grid.addWidget(FishFrame(info, self.widget), temp, j)
+                i+=1     
+                j+=1
+            j=0
+            temp+=1
+            
 
         self.widget.setLayout(self.grid)
        

@@ -2,6 +2,9 @@ import socket
 import threading
 import sys
 import time
+sys.path.append('../src')
+from FishData import FishData
+import pickle
 from queue import Queue
 
 IP = socket.gethostbyname(socket.gethostname())
@@ -19,17 +22,22 @@ def handle_pond(connection, address):
 
     connected = True
     while connected:
-        message = connection.recv(MSG_SIZE).decode(FORMAT)
+        message = connection.recv(MSG_SIZE)
+        #separate message type
+
+        msg = pickle.loads(message)
+
         if message == DISCONNECT_MSG:
             connected = False
             del all_connections[address]
             for addr, conn in all_connections.items():
                 conn.send(f"{address} disconnected.".encode(FORMAT))
-        
-        print(f"{address} : {message}")
+        print(f"{address} : {msg}")
+
         for addr, conn in all_connections.items():
             print(addr, conn)
-            conn.send(message.encode(FORMAT))
+            print("The fish is send")
+            conn.send(pickle.dumps(msg))
 
     connection.close()
 
