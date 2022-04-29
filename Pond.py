@@ -1,4 +1,5 @@
-from src.Fish import Fish
+from PondData import PondData
+from Fish import Fish
 # from run import Dashboard
 from dashboard import Dashboard
 import random
@@ -10,6 +11,7 @@ from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton, Q
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic, QtGui
 import threading
+from pond_sick_salmon import Client
 
 class Pond:
 
@@ -19,6 +21,8 @@ class Pond:
         self.moving_sprites = pygame.sprite.Group()
         self.sharkImage = pygame.image.load("./assets/images/sprites/shark.png")
         self.sharkImage = pygame.transform.scale(self.sharkImage, (128,128))
+        self.msg = ""
+        self.pondData = PondData(self.name)
 
     def getPopulation(self):
         return len(self.fishes)
@@ -56,6 +60,7 @@ class Pond:
 
     def addFish(self, newFishData): #from another pond
         self.fishes.append(newFishData)
+        self.pondData.addFish(newFishData.fishData)
         self.moving_sprites.add(newFishData)
     
     def removeFish(self, fish):
@@ -84,7 +89,8 @@ class Pond:
         direction = 1
         speed_x = 3
         # speed_y = 4
-
+        n = Client()
+        self.msg = n.get_msg()
         pygame.init()
         screen = pygame.display.set_mode((1280, 720))
 
@@ -100,7 +106,7 @@ class Pond:
         
         running = True
         while running:
-            
+            print(n.get_msg())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -112,7 +118,8 @@ class Pond:
                         pond_handler = threading.Thread(target=app.exec_)
                         pond_handler.start()
 
-                        
+            print("POND:"+self.msg.__str__())
+            self.msg = n.send_pond(self.pondData)
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
@@ -122,7 +129,7 @@ class Pond:
                 fish.move(speed_x)
                 screen.blit(fish.image, fish.rect)
             
-            self.randomShark(screen)
+            # self.randomShark(screen)
 
             pygame.display.flip()
             clock.tick(60)

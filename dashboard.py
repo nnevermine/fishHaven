@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic, QtGui
 import sys
 
-from src.fishFrame import FishFrame
+from fishFrame import FishFrame
 
 
 class Dashboard(QMainWindow):

@@ -2,13 +2,14 @@ import socket
 import threading
 import sys
 import time
-sys.path.append('../src')
+# sys.path.append('../src')
 from FishData import FishData
+from PondData import PondData
 import pickle
 from queue import Queue
 
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 7015
+PORT = 8003
 ADDR = (IP, PORT)
 MSG_SIZE = 1024
 FORMAT = "utf-8"
