@@ -24,12 +24,14 @@ class Pond:
         return len(self.fishes)
     
     def randomShark(self, screen):
-        random.seed(123)
         
-        attack = random.random()
-
-        # if attack < 0.1:
-        self.sharkAttack(screen, random.choice(self.fishes))
+        attack = random.randint(0, 300)
+        print(attack)
+        if len(self.fishes) < 2:
+            pass
+        elif attack == 69:
+            print("eaten")
+            self.sharkAttack(screen, random.choice(self.fishes))
     
     def sharkAttack(self, screen, fish):
         screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy())) 
@@ -84,7 +86,8 @@ class Pond:
         direction = 1
         speed_x = 3
         # speed_y = 4
-
+        random.seed(123)
+        
         pygame.init()
         screen = pygame.display.set_mode((1280, 720))
 
