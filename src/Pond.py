@@ -28,12 +28,13 @@ class Pond:
         
         attack = random.random()
 
-        if attack < 0.1:
-            self.sharkAttack(screen, random.choice(self.fishes))
+        # if attack < 0.1:
+        self.sharkAttack(screen, random.choice(self.fishes))
     
     def sharkAttack(self, screen, fish):
         screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy())) 
         self.removeFish(fish)
+        fish.die()
            
 
     def spawnFish(self, parentFish = None):
@@ -119,7 +120,8 @@ class Pond:
                 fish.move(speed_x)
                 screen.blit(fish.image, fish.rect)
             
-                
+            self.randomShark(screen)
+
             pygame.display.flip()
             clock.tick(60)
 
