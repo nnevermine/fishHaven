@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton, Q
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic, QtGui
 import threading
-from pond_sick_salmon import Client
+from Client import Client
 
 class Pond:
 
