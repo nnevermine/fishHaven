@@ -6,10 +6,8 @@ import random
 
 # from src.Fish import Fish
 from src.Pond import Pond
-
 pond = Pond()
 pond.run()
-
 
 
 # import pygame
