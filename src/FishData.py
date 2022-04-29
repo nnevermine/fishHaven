@@ -26,3 +26,22 @@ class FishData:
         self.pheromoneThresh = randPheromoneThresh()
         self.lifetime = 60
         self.parentId = parentId
+    def getId(self):
+        return self.id
+    def getState(self):
+        return self.state
+    def getStatus(self):
+        return self.status
+    def getGenesis(self):
+        return self.genesis
+    def getcrowdThreshold(self):
+        return self.crowdThreshold
+    def pheromone(self):
+        return self.pheromone
+    def pheromoneThresh(self):
+        return self.pheromoneThresh
+    def lifetime(self):
+        return self.lifetime
+    def parentId(self):
+        return self.parentId
+    

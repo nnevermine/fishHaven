@@ -7,7 +7,7 @@ from src.FishData import FishData
 class Fish(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, genesis="sick-salmon", parent = None):
         super().__init__()
-        self.fishData = FishData(parent)
+        self.fishData = FishData(genesis, parent)
          
         #swimming controller
         self.direction = "RIGHT"
@@ -34,6 +34,19 @@ class Fish(pygame.sprite.Sprite):
 
     def getFishData(self):
         return self.fishData
+
+    def getFishTLPos(self):
+        return self.rect.topleft
+    
+    def getFishx(self):
+        return self.rect.left
+
+    def getFishy(self):
+        return self.rect.top
+
+    def die(self):
+        self.kill()
+
 
     def flipSprite(self):
 
