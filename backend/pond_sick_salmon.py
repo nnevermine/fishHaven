@@ -6,6 +6,7 @@ import random
 from queue import Queue
 
 sys.path.append('../src')
+from src.FishData import FishData
 import pickle
 IP = socket.gethostbyname(socket.gethostname())
 PORT = 7015
