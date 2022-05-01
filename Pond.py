@@ -23,6 +23,7 @@ class Pond:
         self.sharkImage = pygame.transform.scale(self.sharkImage, (128,128))
         self.msg = ""
         self.pondData = PondData(self.name)
+        self.network = None
 
     def getPopulation(self):
         return len(self.fishes)
@@ -54,8 +55,10 @@ class Pond:
                 self.fishes.append( Fish(10, 100, self.name, f.getId()))
                 f.resetPheromone()
 
-    def migrateFish(self, fishIndex):
-        pass
+    def migrateFish(self, fishIndex, destination):
+        # destination = random.choice(self.network.other_ponds.keys())
+
+        self.network.migrate_fish(self.fishes[fishIndex].fishData, destination )
     #---------------implement---------------#
 
     def addFish(self, newFishData): #from another pond
@@ -89,8 +92,8 @@ class Pond:
         direction = 1
         speed_x = 3
         # speed_y = 4
-        n = Client()
-        self.msg = n.get_msg()
+        self.network = Client(self.pondData)
+        self.msg = self.network.get_msg()
         pygame.init()
         screen = pygame.display.set_mode((1280, 720))
 
@@ -106,7 +109,7 @@ class Pond:
         
         running = True
         while running:
-            print(n.get_msg())
+            print(self.network.get_msg())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -119,7 +122,7 @@ class Pond:
                         pond_handler.start()
 
             print("POND:"+self.msg.__str__())
-            self.msg = n.send_pond(self.pondData)
+            self.msg = self.network.send_pond()
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])

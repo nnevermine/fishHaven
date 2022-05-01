@@ -5,11 +5,12 @@ import time
 # sys.path.append('../src')
 from FishData import FishData
 from PondData import PondData
+from Payload import Payload
 import pickle
 from queue import Queue
 
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 8003
+PORT = 8004
 ADDR = (IP, PORT)
 MSG_SIZE = 1024
 FORMAT = "utf-8"
@@ -17,6 +18,7 @@ DISCONNECT_MSG = "!DISCONNECT"
 
 all_connections = {}
 
+payload = Payload() #Initialize payload
 
 def handle_pond(connection, address):
     print(f"New pond connected from : {address}")
@@ -28,7 +30,7 @@ def handle_pond(connection, address):
 
         msg = pickle.loads(message)
 
-        if message == DISCONNECT_MSG:
+        if msg.action == DISCONNECT_MSG:
             connected = False
             del all_connections[address]
             for addr, conn in all_connections.items():
@@ -37,7 +39,7 @@ def handle_pond(connection, address):
 
         for addr, conn in all_connections.items():
             print(addr, conn)
-            print("The fish is send")
+            print("The Pond has sent")
             conn.send(pickle.dumps(msg))
 
     connection.close()
