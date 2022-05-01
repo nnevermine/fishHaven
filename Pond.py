@@ -105,8 +105,6 @@ class Pond:
         self.addFish(Fish(10,140, genesis="peem"))
         self.addFish(Fish(100,200, genesis="dang"))
         
-        
-        
         running = True
         while running:
             print(self.network.get_msg())
@@ -121,8 +119,11 @@ class Pond:
                         pond_handler = threading.Thread(target=app.exec_)
                         pond_handler.start()
 
-            print("POND:"+self.msg.__str__())
+            # print("POND:"+self.msg.__str__())
+            print("pond: ", self.pondData)
             self.msg = self.network.send_pond()
+            if (self.msg == "MIGRATE"):
+                self.addFish(Fish(50, 50, self.msg.obj.genesis, self.msg.obj.parentId))
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
