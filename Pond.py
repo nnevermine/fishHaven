@@ -2,7 +2,7 @@ from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
 from dashboard import Dashboard
-import random
+from random import randint
 import pygame
 import pygame_menu
 import sys
@@ -24,20 +24,35 @@ class Pond:
         self.msg = ""
         self.pondData = PondData(self.name)
         self.network = None
+        self.sharkTime = 0
+        self.displayShark = False
 
     def getPopulation(self):
         return len(self.fishes)
     
-    def randomShark(self, screen):
-        random.seed(123)
-        
-        attack = random.random()
-
-        # if attack < 0.1:
-        self.sharkAttack(screen, random.choice(self.fishes))
+    def randomShark(self):
+        dead = randint(0, len(self.fishes)-1)
+        return self.fishes[dead]
     
     def sharkAttack(self, screen, fish):
-        screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy())) 
+        # if self.displayShark:
+        #     screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy())) 
+        # while True:
+        #     time_counter = clock.tick()
+        #     screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy()))
+        #         if time_counter > 3000:
+        #             time_counter = 0
+        clock = pygame.time.Clock()
+
+        time_counter = 0
+
+        while self.displayShark:
+            time_counter = clock.tick()
+            screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy()))
+            if time_counter > 3000:
+                self.displayShark = False
+
+
         self.removeFish(fish)
         fish.die()
            
@@ -48,7 +63,7 @@ class Pond:
         self.moving_sprites.add(tempFish)
         
     def pheromoneCloud(self ):
-        pheromone = random.randint(2, 20)
+        pheromone = randint(2, 20)
         for f in self.fishes:
             f.increasePheromone(pheromone)
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
@@ -101,6 +116,7 @@ class Pond:
         bg = pygame.transform.scale(bg, (1280, 720))
         pygame.display.set_caption("Fish Haven Project")
         clock = pygame.time.Clock()
+        start_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
         self.addFish(Fish(10,140, genesis="peem"))
         self.addFish(Fish(100,200, genesis="dang"))
@@ -132,8 +148,20 @@ class Pond:
             for fish in self.moving_sprites:
                 fish.move(speed_x)
                 screen.blit(fish.image, fish.rect)
+
+
+            time_since_enter = pygame.time.get_ticks() - start_time
+            #shark every 30 seconds
+            if time_since_enter > 30000:
+                deadFish = self.randomShark()
+                screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
+                pygame.display.flip()
+                pygame.event.pump()
+                pygame.time.delay(500)                   
+                self.removeFish(deadFish)
+                deadFish.die()
+                start_time = pygame.time.get_ticks()
             
-            # self.randomShark(screen)
 
             pygame.display.flip()
             clock.tick(60)
