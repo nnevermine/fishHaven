@@ -5,11 +5,12 @@ import time
 import random
 from queue import Queue
 
-sys.path.append('../src')
-from src.FishData import FishData
+# sys.path.append('../src')
+from FishData import FishData
+from PondData import PondData
 import pickle
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 7015
+PORT = 8003
 ADDR = (IP, PORT)
 MSG_SIZE = 1024
 FORMAT = "utf-8"
@@ -47,11 +48,16 @@ class Client:
         self.addr = ADDR
         self.connected = True
         self.other_ponds = {}
+        self.msg = self.connect()
+
+    def get_msg(self):
+        return self.msg
     
     def connect(self):
         try:
             self.client.connect(self.addr)
             print(f"Client connected ")
+            return "Connected"
         except:
             print("Can not connect to the server")
 
@@ -76,6 +82,7 @@ class Client:
             print(e)
 
     def handle_msg(self, msg):
+        return msg
         if msg[:7] == "MIGRATE":
             pass
         elif msg[:4] == "JOIN":

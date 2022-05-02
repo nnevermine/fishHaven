@@ -2,6 +2,12 @@ class PondData:
     def __init__(self, pondName):
         self.pondName = pondName
         self.fishes = []
+
+    def __str__(self):
+        fishId = ""
+        for f in self.fishes:
+            fishId += f.getId() + " "
+        return self.pondName + " " + fishId
     
     def addFish(self, fishData):
         self.fishes.append(fishData)

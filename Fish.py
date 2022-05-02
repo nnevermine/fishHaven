@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 
-from src.FishData import FishData
+from FishData import FishData
 
 class Fish(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, genesis="sick-salmon", parent = None):
