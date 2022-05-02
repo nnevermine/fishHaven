@@ -114,6 +114,7 @@ class Pond:
             print(self.network.get_msg())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.network.disconnect()
                     running = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
@@ -126,8 +127,9 @@ class Pond:
             # print("POND:"+self.msg.__str__())
             print("pond: ", self.pondData)
             self.msg = self.network.send_pond()
-            if (self.msg == "MIGRATE"):
-                self.addFish(Fish(50, 50, self.msg.obj.genesis, self.msg.obj.parentId))
+            print(self.msg.data)
+            if (self.msg.action == "MIGRATE"):
+                self.addFish(Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId))
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])

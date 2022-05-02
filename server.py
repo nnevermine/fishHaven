@@ -10,7 +10,7 @@ import pickle
 from queue import Queue
 
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 8010
+PORT = 8015
 ADDR = (IP, PORT)
 MSG_SIZE = 1024
 FORMAT = "utf-8"
@@ -32,9 +32,13 @@ def handle_pond(connection, address):
 
         if msg.action == DISCONNECT_MSG:
             connected = False
-            del all_connections[address]
+            all_connections.pop(address)
             for addr, conn in all_connections.items():
-                conn.send(f"{address} disconnected.".encode(FORMAT))
+                # conn.send(f"{address} disconnected.".encode(FORMAT))
+                temp = Payload()
+                temp.action = f"{address} disconnected"
+                temp.data = {}
+                conn.send(pickle.dumps(temp))
         print(f"{address} : {msg}")
 
         for addr, conn in all_connections.items():
@@ -48,7 +52,7 @@ if __name__ == "__main__":
     print("Starting vivisystem...")
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(ADDR)
-    server.listen(5)
+    server.listen(20)
     print(f"Vivisystem is listening on {IP}:{PORT}")
 
     while True:
