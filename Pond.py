@@ -128,8 +128,7 @@ class Pond:
                 if event.type == pygame.QUIT:
                     running = False
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        print(self.fishes[0].getId())
+                    if event.key == pygame.K_RIGHT:
                         app = QApplication(sys.argv)
                         d = Dashboard(self.fishes)
                         pond_handler = threading.Thread(target=app.exec_)
