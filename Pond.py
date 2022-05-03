@@ -180,21 +180,22 @@ class Pond:
             time_since_enter = pygame.time.get_ticks() - start_time
             time_since_new_birth = pygame.time.get_ticks() - pregnant_time
             time_since_last_data_send = pygame.time.get_ticks() - send_data_time
-            if (time_since_new_birth > 3000):
+            if (time_since_new_birth > 7500):
                 self.pheromoneCloud()
                 pregnant_time = pygame.time.get_ticks()
 
             #shark every 30 seconds
-            if time_since_enter > 20000:
+            if time_since_enter > 15000:
                 deadFish = self.randomShark()
                 screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
                 pygame.display.flip()
                 pygame.event.pump()
-                pygame.time.delay(500)                   
+                pygame.time.delay(500)
                 self.removeFish(deadFish)
                 deadFish.die()
                 start_time = pygame.time.get_ticks()
 
+            print(len(self.fishes))
             # if time_since_last_data_send > 2000:
             #     pass
             pygame.display.flip()
