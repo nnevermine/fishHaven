@@ -135,6 +135,7 @@ class Pond:
         clock = pygame.time.Clock()
         start_time = pygame.time.get_ticks()
         pregnant_time = pygame.time.get_ticks()
+        send_data_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
 
         self.addFish(Fish(10,140, genesis="peem"))
@@ -178,6 +179,7 @@ class Pond:
             
             time_since_enter = pygame.time.get_ticks() - start_time
             time_since_new_birth = pygame.time.get_ticks() - pregnant_time
+            time_since_last_data_send = pygame.time.get_ticks() - send_data_time
             if (time_since_new_birth > 3000):
                 self.pheromoneCloud()
                 pregnant_time = pygame.time.get_ticks()
@@ -193,6 +195,8 @@ class Pond:
                 deadFish.die()
                 start_time = pygame.time.get_ticks()
 
+            # if time_since_last_data_send > 2000:
+            #     pass
             pygame.display.flip()
             clock.tick(60)
 

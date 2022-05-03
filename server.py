@@ -12,7 +12,7 @@ from queue import Queue
 IP = socket.gethostbyname(socket.gethostname())
 PORT = 8016
 ADDR = (IP, PORT)
-MSG_SIZE = 2096
+MSG_SIZE = 4096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"
 

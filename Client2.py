@@ -131,18 +131,19 @@ if __name__ == "__main__":
     # p.addFish(f2)
     p.addFish(f3)
     p.addFish(f4)
-
     connected = True
     c = Client(p)    
     c.send_pond()
     time.sleep(3)
+    print('fishes',p.fishes)
     c.migrate_fish(p.fishes[1],"sick-salmon")
     time.sleep(7)
+    print('fishes',p.fishes)
 
-    c.migrate_fish(p.fishes[2],"sick-salmon")
+    c.migrate_fish(p.fishes[1],"sick-salmon")
     time.sleep(3)
 
-    c.migrate_fish(p.fishes[3],"sick-salmon")
+    # c.migrate_fish(p.fishes[3],"sick-salmon")
 
         # print("Client send :",f)
         # msg = pickle.dumps(f)
