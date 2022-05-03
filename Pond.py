@@ -50,7 +50,7 @@ class Pond:
         self.moving_sprites.add(tempFish)
         
     def pheromoneCloud(self ):
-        pheromone = randint(2, 20)
+        pheromone = randint(5, 40)
         for f in self.fishes:
             f.increasePheromone(pheromone)
         
@@ -138,8 +138,8 @@ class Pond:
         send_data_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
 
-        self.addFish(Fish(10,140, genesis="peem"))
-        self.addFish(Fish(100,200, genesis="dang"))
+        # self.addFish(Fish(10,140, genesis="peem"))
+        # self.addFish(Fish(100,200, genesis="dang"))
 
         app = QApplication(sys.argv)
 
@@ -201,7 +201,7 @@ class Pond:
                 deadFish.die()
                 start_time = pygame.time.get_ticks()
 
-            print(len(self.fishes))
+            
 
             # if time_since_last_data_send > 2000:
             #     pass
