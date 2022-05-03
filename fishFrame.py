@@ -14,22 +14,26 @@ class FishFrame(QGroupBox):
 
     def addInfo(self, info):
         low_rez = QSize(100, 100)
-        pixmap = QPixmap('./assets/images/sprites/1.png')
+        pixmap = QPixmap('./assets/images/sprites/local-pond/1.png')
         label = QLabel(self)
-        if info[3] == "sick salmon":
-            pixmap = QPixmap('./assets/images/sprites/1.png')
+
+        if info[3] == "sick-salmon":
+            pixmap = QPixmap('./assets/images/sprites/local-pond/1.png')
         elif info[3] == "peem":
-            pixmap = QPixmap('./assets/images/sprites/peem.png')
+            pixmap = QPixmap('./assets/images/sprites/foreign-pond/1.png')
         elif info[3] == "dang":
             pixmap = QPixmap('./assets/images/sprites/dang.png')
         elif info[3] == "pla":
-            #have to change this to a different image
-            pixmap = QPixmap('./assets/images/sprites/6.png')
+            pixmap = QPixmap('./assets/images/sprites/plafish.png')
+
         pixmap = pixmap.scaled(low_rez)
         label.setPixmap(pixmap)
         self.addLabel(label)
-        for i in info:
-            self.addLabel(QLabel(i))
+
+        self.addLabel(QLabel("ID: " + str(info[0])))
+        self.addLabel(QLabel("State: " + str(info[1])))
+        self.addLabel(QLabel("Status: " + str(info[2])))
+        self.addLabel(QLabel("Genesis: " + str(info[3])))
 
     def addLabel(self, widget):
         self.vbox.addWidget(widget)
