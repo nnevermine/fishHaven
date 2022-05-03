@@ -102,6 +102,7 @@ class Client:
         self.addr = ADDR
         self.connected = True
         self.other_ponds = {}
+        self.disconnected_ponds = {}
         self.msg = self.connect()
         self.payload = Payload()
         self.pond = pond
@@ -177,15 +178,21 @@ class Client:
             print(self.other_ponds)
             return msg
         
-        if(msg_action == "MIGRATE"):
+        elif(msg_action == "MIGRATE"):
             if(self.pond.pondName == msg_object["destination"]):
                 print("=======RECIEVED MIGRATION=======")
                 self.pond.addFish(msg_object["fish"])
                 print(self.pond.fishes)
                 print("================================")
         
-        else:
-            pass
+        elif(msg_action == DISCONNECT_MSG):
+            print("DIS ACTION",msg_action)
+            print("DIS OBJECT",msg_object)
+            self.disconnected_ponds[msg_object.pondName] = msg_object
+            self.other_ponds.pop(msg_object.pondName)
+
+            # time.sleep(10)
+        print(self.other_ponds, self.disconnected_ponds)
         return msg
 
         # if msg[:7] == "MIGRATE":
