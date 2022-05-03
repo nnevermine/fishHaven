@@ -51,8 +51,10 @@ class Pond:
         pheromone = randint(2, 20)
         for f in self.fishes:
             f.increasePheromone(pheromone)
+        
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
-                self.fishes.append( Fish(10, 100, self.name, f.getId()))
+                babyfish = Fish(10, 100, self.name, f.getId())
+                self.addFish(babyfish)
                 f.resetPheromone()
 
     def migrateFish(self, fishIndex, destination):
@@ -104,6 +106,7 @@ class Pond:
         pygame.display.set_caption("Fish Haven Project")
         clock = pygame.time.Clock()
         start_time = pygame.time.get_ticks()
+        pregnant_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
         self.addFish(Fish(10,140, genesis="peem"))
         self.addFish(Fish(100,200, genesis="dang"))
@@ -138,7 +141,14 @@ class Pond:
                 fish.move(speed_x)
                 screen.blit(fish.image, fish.rect)
             
+      
+            
             time_since_enter = pygame.time.get_ticks() - start_time
+            time_since_new_birth = pygame.time.get_ticks() - pregnant_time
+            if (time_since_new_birth > 3000):
+                self.pheromoneCloud()
+                pregnant_time = pygame.time.get_ticks()
+
             #shark every 30 seconds
             if time_since_enter > 20000:
                 deadFish = self.randomShark()
