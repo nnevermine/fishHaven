@@ -42,7 +42,7 @@ def handle_pond(connection, address):
                 temp.action = DISCONNECT_MSG
                 temp.data = msg.data
                 conn.send(pickle.dumps(temp))
-        
+
         else:
             for addr, conn in all_connections.items():
                 print(msg)
