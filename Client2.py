@@ -84,6 +84,7 @@ class Client:
     def disconnect(self) :
         try:
             self.payload.action = DISCONNECT_MSG
+            self.payload.data = self.pond
             print("Disconnecting...")
             self.client.send(pickle.dumps(self.payload))
             return self.client.recv(MSG_SIZE)
@@ -136,12 +137,12 @@ if __name__ == "__main__":
     c.send_pond()
     time.sleep(3)
     c.migrate_fish(p.fishes[1],"sick-salmon")
-    time.sleep(7)
+    # time.sleep(7)
 
-    c.migrate_fish(p.fishes[2],"sick-salmon")
-    time.sleep(3)
+    # c.migrate_fish(p.fishes[2],"sick-salmon")
+    # time.sleep(3)
 
-    c.migrate_fish(p.fishes[3],"sick-salmon")
+    # c.migrate_fish(p.fishes[3],"sick-salmon")
 
         # print("Client send :",f)
         # msg = pickle.dumps(f)

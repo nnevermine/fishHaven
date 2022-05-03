@@ -29,27 +29,26 @@ def handle_pond(connection, address):
         #separate message type
 
         msg = pickle.loads(message)
-
+        # print(f"{address} : {msg}")
+        # print(all_connections)
         if msg.action == DISCONNECT_MSG:
             connected = False
             all_connections.pop(address)
             for addr, conn in all_connections.items():
                 # conn.send(f"{address} disconnected.".encode(FORMAT))
+                print("-------------------------",msg.action)
+                print(msg.data)
                 temp = Payload()
-                temp.action = f"{address} disconnected"
-                temp.data = {}
+                temp.action = DISCONNECT_MSG
+                temp.data = msg.data
                 conn.send(pickle.dumps(temp))
-        print(f"{address} : {msg}")
-
-        for addr, conn in all_connections.items():
-            print(addr, conn)
-            print("The Pond has sent")
-            temp = Payload()
-            print('action: ', msg.action)
-            print('data: ', msg.data)
-            temp.action = msg.action[:]
-            temp.data = msg.data
-            conn.send(pickle.dumps(msg))
+        
+        else:
+            for addr, conn in all_connections.items():
+                print(addr, conn)
+                print("The Pond has sent")
+                
+                conn.send(pickle.dumps(msg))
 
     connection.close()
 
@@ -57,7 +56,7 @@ if __name__ == "__main__":
     print("Starting vivisystem...")
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(ADDR)
-    server.listen(20)
+    server.listen(100)
     print(f"Vivisystem is listening on {IP}:{PORT}")
 
     while True:
