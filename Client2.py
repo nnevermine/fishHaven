@@ -122,13 +122,13 @@ class Client:
 if __name__ == "__main__":
 
     f1 = FishData("Sick Salmon","123456")
-    f2 = FishData("Fish2","123456")
+    # f2 = FishData("Fish2","123456")
     f3 = FishData("pla","324221")
     f4 = FishData("pla","324123")
 
     p = PondData("pla")
     p.addFish(f1)
-    p.addFish(f2)
+    # p.addFish(f2)
     p.addFish(f3)
     p.addFish(f4)
 
@@ -137,12 +137,12 @@ if __name__ == "__main__":
     c.send_pond()
     time.sleep(3)
     c.migrate_fish(p.fishes[1],"sick-salmon")
-    # time.sleep(7)
+    time.sleep(7)
 
-    # c.migrate_fish(p.fishes[2],"sick-salmon")
-    # time.sleep(3)
+    c.migrate_fish(p.fishes[2],"sick-salmon")
+    time.sleep(3)
 
-    # c.migrate_fish(p.fishes[3],"sick-salmon")
+    c.migrate_fish(p.fishes[3],"sick-salmon")
 
         # print("Client send :",f)
         # msg = pickle.dumps(f)

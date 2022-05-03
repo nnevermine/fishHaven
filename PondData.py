@@ -23,3 +23,8 @@ class PondData:
             if self.fishes[i].id == newFishData.id:
                 self.fishes[i] = newFishData
                 return
+    def migrateFish( self, fishId):
+        for i in range(len(self.fishes)):
+            if self.fishes[i].id == fishId:
+                self.fishes.pop(i)
+                return
