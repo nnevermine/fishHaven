@@ -10,7 +10,7 @@ import pickle
 from queue import Queue
 
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 8015
+PORT = 8016
 ADDR = (IP, PORT)
 MSG_SIZE = 2096
 FORMAT = "utf-8"

@@ -55,7 +55,7 @@ class Pond:
             f.increasePheromone(pheromone)
         
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
-                newFish = Fish(50, 50, self.name, f.getId)
+                newFish = Fish(50, 50, self.name, f.getId())
                 self.addFish( newFish)
                 # self.pondData.addFish( newFish.fishData)
                 
@@ -114,7 +114,7 @@ class Pond:
             
         if ( injectPheromone ):
             self.pheromoneCloud()
-        print("Client send :",self.pondData)
+        # print("Client send :",self.pondData)
         self.network.pond = self.pondData
 
     def run(self):

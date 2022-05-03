@@ -44,4 +44,9 @@ class FishData:
         return self.lifetime
     def parentId(self):
         return self.parentId
-    
+
+    def __str__(self):
+        if self.parentId:
+            return self.id + " " + self.parentId + "\n"
+        else:
+            return self.id + "\n"    
