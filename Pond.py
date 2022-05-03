@@ -128,10 +128,10 @@ class Pond:
 
             # print("POND:"+self.msg.__str__())
             print("pond: ", self.pondData)
-            # self.msg = self.network.send_pond()
-            # print(self.msg.data)
-            # if (self.msg.action == "MIGRATE"):
-            #     self.addFish(Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId))
+            self.msg = self.network.send_pond()
+            print(self.msg.data)
+            if (self.msg.action == "MIGRATE"):
+                self.addFish(Fish(50, 200, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId))
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])

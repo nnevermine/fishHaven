@@ -24,7 +24,7 @@ class FishFrame(QGroupBox):
             pixmap = QPixmap('./assets/images/sprites/dang.png')
         elif info[3] == "pla":
             #have to change this to a different image
-            pixmap = QPixmap('./assets/images/sprites/6.png')
+            pixmap = QPixmap('./assets/images/sprites/pla.png')
         pixmap = pixmap.scaled(low_rez)
         label.setPixmap(pixmap)
         self.addLabel(label)

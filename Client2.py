@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
     p = PondData("pla")
     p.addFish(f1)
-    p.addFish(f2)
+    # p.addFish(f2)
     p.addFish(f3)
     p.addFish(f4)
 
