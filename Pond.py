@@ -140,7 +140,9 @@ class Pond:
 
         self.addFish(Fish(10,140, genesis="peem"))
         self.addFish(Fish(100,200, genesis="dang"))
-        
+
+        app = QApplication(sys.argv)
+
         running = True
         while running:
 
@@ -157,7 +159,6 @@ class Pond:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         print(self.fishes[0].getId())
-                        app = QApplication(sys.argv)
                         d = Dashboard(self.fishes)
                         pond_handler = threading.Thread(target=app.exec_)
                         pond_handler.start()
