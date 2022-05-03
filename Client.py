@@ -175,6 +175,8 @@ class Client:
 
         if(msg_action == "SEND" and self.pond.pondName != msg_object.pondName) :
             self.other_ponds[msg_object.pondName] = msg_object #Update in the dict key = pondname, values = <PondData>
+            if (msg_object.pondName in self.disconnected_ponds.keys()):
+                self.disconnected_ponds.pop(msg_object.pondName)
             print(self.other_ponds)
             return msg
         
