@@ -143,7 +143,13 @@ class Pond:
         
         running = True
         while running:
-            print(self.network.get_msg())
+
+            if len(self.fishes) > 20:
+                kill = randint(0, len(self.fishes) - 1)
+                self.removeFish(self.fishes[kill])
+                # self.fishes[kill].die()
+
+            # print(self.network.get_msg())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.network.disconnect()
@@ -157,7 +163,7 @@ class Pond:
                         pond_handler.start()
 
             # print("POND:"+self.msg.__str__())
-            print("pond: ", self.pondData)
+            # print("pond: ", self.pondData)
             self.msg = self.network.send_pond()
            # print(self.msg.data)
             if (self.msg.action == "MIGRATE"):
@@ -174,18 +180,17 @@ class Pond:
             for fish in self.moving_sprites:
                 fish.move(speed_x)
                 screen.blit(fish.image, fish.rect)
-            
       
             
             time_since_enter = pygame.time.get_ticks() - start_time
             time_since_new_birth = pygame.time.get_ticks() - pregnant_time
             time_since_last_data_send = pygame.time.get_ticks() - send_data_time
-            if (time_since_new_birth > 7500):
+            if (time_since_new_birth > 6000):
                 self.pheromoneCloud()
                 pregnant_time = pygame.time.get_ticks()
 
             #shark every 30 seconds
-            if time_since_enter > 15000:
+            if time_since_enter > 17500:
                 deadFish = self.randomShark()
                 screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
                 pygame.display.flip()
@@ -196,6 +201,7 @@ class Pond:
                 start_time = pygame.time.get_ticks()
 
             print(len(self.fishes))
+
             # if time_since_last_data_send > 2000:
             #     pass
             pygame.display.flip()
