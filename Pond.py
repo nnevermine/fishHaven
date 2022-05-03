@@ -2,6 +2,8 @@ from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
 from dashboard import Dashboard
+from random import randint
+
 import random
 import pygame
 import pygame_menu
@@ -24,24 +26,20 @@ class Pond:
         self.msg = ""
         self.pondData = PondData(self.name)
         self.network = None
+        self.sharkTime = 0
+        self.displayShark = False
 
     def getPopulation(self):
         return len(self.fishes)
     
-    def randomShark(self, screen):
-        
-        attack = random.randint(0, 300)
-        print(attack)
-        if len(self.fishes) < 2:
-            pass
-        elif attack == 69:
-            print("eaten")
-            self.sharkAttack(screen, random.choice(self.fishes))
-    
-    def sharkAttack(self, screen, fish):
-        screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy())) 
-        self.removeFish(fish)
-        fish.die()
+    def randomShark(self):
+        dead = randint(0, len(self.fishes)-1)
+        return self.fishes[dead]
+
+    # def sharkAttack(self, screen, fish):
+    #     screen.blit(self.sharkImage, (fish.getFishx(), fish.getFishy())) 
+    #     self.removeFish(fish)
+    #     fish.die()
            
 
     def spawnFish(self, parentFish = None):
@@ -50,7 +48,7 @@ class Pond:
         self.moving_sprites.add(tempFish)
         
     def pheromoneCloud(self ):
-        pheromone = random.randint(2, 20)
+        pheromone = randint(2, 20)
         for f in self.fishes:
             f.increasePheromone(pheromone)
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
@@ -105,6 +103,7 @@ class Pond:
         bg = pygame.transform.scale(bg, (1280, 720))
         pygame.display.set_caption("Fish Haven Project")
         clock = pygame.time.Clock()
+        start_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
         self.addFish(Fish(10,140, genesis="peem"))
         self.addFish(Fish(100,200, genesis="dang"))
@@ -117,7 +116,7 @@ class Pond:
                     self.network.disconnect()
                     running = False
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_RIGHT:
                         print(self.fishes[0].getId())
                         app = QApplication(sys.argv)
                         d = Dashboard(self.fishes)
@@ -126,10 +125,10 @@ class Pond:
 
             # print("POND:"+self.msg.__str__())
             print("pond: ", self.pondData)
-            self.msg = self.network.send_pond()
-            print(self.msg.data)
-            if (self.msg.action == "MIGRATE"):
-                self.addFish(Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId))
+            # self.msg = self.network.send_pond()
+            # print(self.msg.data)
+            # if (self.msg.action == "MIGRATE"):
+            #     self.addFish(Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId))
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
@@ -139,7 +138,17 @@ class Pond:
                 fish.move(speed_x)
                 screen.blit(fish.image, fish.rect)
             
-            # self.randomShark(screen)
+            time_since_enter = pygame.time.get_ticks() - start_time
+            #shark every 30 seconds
+            if time_since_enter > 20000:
+                deadFish = self.randomShark()
+                screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
+                pygame.display.flip()
+                pygame.event.pump()
+                pygame.time.delay(500)                   
+                self.removeFish(deadFish)
+                deadFish.die()
+                start_time = pygame.time.get_ticks()
 
             pygame.display.flip()
             clock.tick(60)
