@@ -57,12 +57,13 @@ class Pond:
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
                 newFish = Fish(50, 50, self.name, f.getId)
                 self.addFish( newFish)
-                self.pondData.addFish( newFish.fishData)
+                # self.pondData.addFish( newFish.fishData)
+                
                 f.resetPheromone()
 
     def migrateFish(self, fishIndex, destination):
         # destination = random.choice(self.network.other_ponds.keys())
-
+        self.pondData.migrateFish(self.fishes[fishIndex].getId())
         self.network.migrate_fish(self.fishes[fishIndex].fishData, destination )
     #---------------implement---------------#
 
@@ -70,6 +71,8 @@ class Pond:
         self.fishes.append(newFishData)
         self.pondData.addFish(newFishData.fishData)
         self.moving_sprites.add(newFishData)
+        self.network.pondData = self.pondData
+
     
     def removeFish(self, fish):
         self.fishes.remove(fish)
@@ -83,33 +86,35 @@ class Pond:
             if f.getGenesis() != self.name and f.in_pond_sec >= 5:
                 newFish = Fish(50, 50,f.fishData.genesis, f.fishData.id)
                 self.addFish( newFish )
-                self.pondData.addFish( newFish.fishData )
+                # self.pondData.addFish( newFish.fishData )
             elif f.getGenesis() == self.name and f.in_pond_sec <= 15:
                 if random.getrandbits(1):
                     dest = random.choice(self.network.other_ponds.keys())
                     self.migrateFish( ind, dest )
-                    self.network.migrate_fish(f, dest)
-                    self.pondData.migrateFish(f.getId())
+                    # self.network.migrate_fish(f, dest)
+                    # self.pondData.migrateFish(f.getId())
                     parent = None
                     if f.parentId:
                         parent = f.parentId
                     for ind2, f2 in enumerate(self.fishes):
                         if parent and f2.fishData.parentId == parent or f2.fishData.parentId == f.id:
                             self.migrateFish( ind2, dest)
-                            self.network.migrate_fish( f2, dest)
-                            self.pondData.migrateFish(f2.getId())
+                            # self.network.migrate_fish( f2, dest)
+                            # self.pondData.migrateFish(f2.getId())
                             break
                     continue
             else :
                 dest = random.choice(self.network.other_ponds.keys())
                 if self.getPopulation() > f.getCrowdThresh():
+                    
                     self.migrateFish( ind, dest )
-                    self.network.migrate_fish(f, dest )
-                    self.pondData.migrateFish( f.fishData.id )
+                    # self.network.migrate_fish(f, dest )
+                    # self.pondData.migrateFish( f.fishData.id )
                 continue
             
         if ( injectPheromone ):
             self.pheromoneCloud()
+        print("Client send :",self.pondData)
         self.network.pond = self.pondData
 
     def run(self):
@@ -131,6 +136,7 @@ class Pond:
         start_time = pygame.time.get_ticks()
         pregnant_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
+
         self.addFish(Fish(10,140, genesis="peem"))
         self.addFish(Fish(100,200, genesis="dang"))
         
@@ -152,11 +158,12 @@ class Pond:
             # print("POND:"+self.msg.__str__())
             print("pond: ", self.pondData)
             self.msg = self.network.send_pond()
-            # print(self.msg.data)
+           # print(self.msg.data)
             if (self.msg.action == "MIGRATE"):
                 newFish = Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
                 self.addFish(newFish)
-                self.pondData.addFish(newFish.fishData)
+
+                # self.pondData.addFish(newFish.fishData)
                 self.network.pondData = self.pondData
                     
             screen.fill((0, 0, 0))

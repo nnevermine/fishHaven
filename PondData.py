@@ -6,10 +6,14 @@ class PondData:
     def __str__(self):
         fishId = ""
         for f in self.fishes:
-            fishId += f.getId() + " "
+            # fishId += f.getId() + " "
+            print(f)
         return self.pondName + " " + fishId
     
     def addFish(self, fishData):
+        for i in range(len(self.fishes)):
+            if self.fishes[i].id == fishData.id:
+                return
         self.fishes.append(fishData)
 
     def getFishById( self, fishId):

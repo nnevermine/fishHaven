@@ -45,7 +45,7 @@ def handle_pond(connection, address):
         
         else:
             for addr, conn in all_connections.items():
-                print(addr, conn)
+                print(msg)
                 print("The Pond has sent")
                 
                 conn.send(pickle.dumps(msg))
