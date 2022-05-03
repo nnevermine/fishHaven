@@ -55,7 +55,7 @@ class Pond:
             f.increasePheromone(pheromone)
         
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
-                newFish = Fish(50, 50, self.name, f.getId())
+                newFish = Fish(50, randint(50, 650), self.name, f.getId())
                 self.addFish( newFish)
                 # self.pondData.addFish( newFish.fishData)
                 
