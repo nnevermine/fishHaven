@@ -12,7 +12,7 @@ from queue import Queue
 IP = socket.gethostbyname(socket.gethostname())
 PORT = 8015
 ADDR = (IP, PORT)
-MSG_SIZE = 1024
+MSG_SIZE = 2096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"
 
@@ -44,6 +44,11 @@ def handle_pond(connection, address):
         for addr, conn in all_connections.items():
             print(addr, conn)
             print("The Pond has sent")
+            temp = Payload()
+            print('action: ', msg.action)
+            print('data: ', msg.data)
+            temp.action = msg.action[:]
+            temp.data = msg.data
             conn.send(pickle.dumps(msg))
 
     connection.close()
