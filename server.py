@@ -29,7 +29,7 @@ def handle_pond(connection, address):
         #separate message type
 
         msg = pickle.loads(message)
-        # print(f"{address} : {msg}")
+        print(f"{address} : {msg.action}")
         # print(all_connections)
         if msg.action == DISCONNECT_MSG:
             connected = False
@@ -45,7 +45,7 @@ def handle_pond(connection, address):
 
         else:
             for addr, conn in all_connections.items():
-                print(msg)
+                # print(msg)
                 print("The Pond has sent")
                 
                 conn.send(pickle.dumps(msg))

@@ -1,4 +1,5 @@
 import enum
+from re import S
 from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
@@ -16,7 +17,6 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic, QtGui
 import threading
 from Client import Client
-
 class Pond:
 
     def __init__(self):
@@ -125,7 +125,12 @@ class Pond:
         random.seed(123)
         
         self.network = Client(self.pondData)
-        self.msg = self.network.get_msg()
+        # self.msg = self.network.get_msg()
+        # msg_handler = threading.Thread(target=self.network.get_msg)
+        # msg_handler.start()
+        send_handler = threading.Thread(target=self.network.send_pond)
+        send_handler.start()
+
         pygame.init()
         screen = pygame.display.set_mode((1280, 720))
 
@@ -165,8 +170,9 @@ class Pond:
 
             # print("POND:"+self.msg.__str__())
             # print("pond: ", self.pondData)
-            self.msg = self.network.send_pond()
+            # self.msg = self.network.send_pond()
            # print(self.msg.data)
+            self.msg = self.network.messageQ.pop()
             if (self.msg.action == "MIGRATE"):
                 newFish = Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
                 self.addFish(newFish)
