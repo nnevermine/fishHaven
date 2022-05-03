@@ -1,8 +1,10 @@
+import enum
 from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
 from dashboard import Dashboard
 from random import randint
+from FishData import FishData
 
 import random
 import pygame
@@ -53,8 +55,9 @@ class Pond:
             f.increasePheromone(pheromone)
         
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
-                babyfish = Fish(10, 100, self.name, f.getId())
-                self.addFish(babyfish)
+                newFish = Fish(50, 50, self.name, f.getId)
+                self.addFish( newFish)
+                self.pondData.addFish( newFish.fishData)
                 f.resetPheromone()
 
     def migrateFish(self, fishIndex, destination):
@@ -75,19 +78,39 @@ class Pond:
     def update(self, injectPheromone = False):
         for ind, f in enumerate( self.fishes): #checkout all the fish in the pond
             f.updateLifeTime() # decrease life time by 1 sec
+            self.pondData.setFish(f.fishData)
+
             if f.getGenesis() != self.name and f.in_pond_sec >= 5:
-                self.addFish( f )
+                newFish = Fish(50, 50,f.fishData.genesis, f.fishData.id)
+                self.addFish( newFish )
+                self.pondData.addFish( newFish.fishData )
             elif f.getGenesis() == self.name and f.in_pond_sec <= 15:
                 if random.getrandbits(1):
-                    self.migrateFish( ind ) 
+                    dest = random.choice(self.network.other_ponds.keys())
+                    self.migrateFish( ind, dest )
+                    self.network.migrate_fish(f, dest)
+                    self.pondData.migrateFish(f.getId())
+                    parent = None
+                    if f.parentId:
+                        parent = f.parentId
+                    for ind2, f2 in enumerate(self.fishes):
+                        if parent and f2.fishData.parentId == parent or f2.fishData.parentId == f.id:
+                            self.migrateFish( ind2, dest)
+                            self.network.migrate_fish( f2, dest)
+                            self.pondData.migrateFish(f2.getId())
+                            break
                     continue
-            
-            if self.getPopulation() > f.getCrowdThresh():
-                self.migrateFish( ind )
+            else :
+                dest = random.choice(self.network.other_ponds.keys())
+                if self.getPopulation() > f.getCrowdThresh():
+                    self.migrateFish( ind, dest )
+                    self.network.migrate_fish(f, dest )
+                    self.pondData.migrateFish( f.fishData.id )
                 continue
             
         if ( injectPheromone ):
             self.pheromoneCloud()
+        self.network.pond = self.pondData
 
     def run(self):
         # General setup
@@ -129,9 +152,10 @@ class Pond:
             # print("POND:"+self.msg.__str__())
             print("pond: ", self.pondData)
             self.msg = self.network.send_pond()
-            print(self.msg.data)
             if (self.msg.action == "MIGRATE"):
-                self.addFish(Fish(50, 200, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId))
+                newFish = Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
+                self.addFish(newFish)
+                self.network.pondData = self.pondData
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])

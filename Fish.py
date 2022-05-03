@@ -16,9 +16,7 @@ class Fish(pygame.sprite.Sprite):
         self.sprites = [] #Main sprite
         self.leftSprite = []
         self.rightSprite = []
-        self.loadSpriteRight("./assets/images/sprites/", self.sprites)
-        self.loadSpriteLeft("./assets/images/sprites/")
-        self.loadSpriteRight("./assets/images/sprites/", self.rightSprite)
+        self.loadSprite(genesis)
 
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
@@ -56,6 +54,17 @@ class Fish(pygame.sprite.Sprite):
             self.sprites=self.leftSprite
             
         self.current_sprite = 0
+
+    def loadSprite(self, genesis):
+        path = "./assets/images/sprites/"
+        if genesis == "sick-salmon":
+            path += "local-pond/"
+        else:
+            path += "foreign-pond/"
+
+        self.loadSpriteRight(path, self.sprites)
+        self.loadSpriteLeft(path)
+        self.loadSpriteRight(path, self.rightSprite)
 
     def loadSpriteRight(self, path, spriteContainer):
         for i in range(1, 5):

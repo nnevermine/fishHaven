@@ -2,3 +2,4 @@
 src/__pycache__/FishData.cpython-39.pyc
 
 *.pyc
+.DS_Store
