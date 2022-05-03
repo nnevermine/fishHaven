@@ -13,7 +13,7 @@ import pickle
 from server import PORT
 IP = socket.gethostbyname(socket.gethostname())
 ADDR = (IP, PORT)
-MSG_SIZE = 1024
+MSG_SIZE = 4096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"
 
@@ -124,7 +124,9 @@ class Client:
             self.payload.data = self.pond
             print(self.payload)
             print("Client send :",self.pond)
+
             self.client.send(pickle.dumps(self.payload))
+
             msg =  pickle.loads(self.client.recv(MSG_SIZE))
             return self.handle_msg(msg)
 

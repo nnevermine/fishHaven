@@ -14,7 +14,7 @@ from server import PORT
 import pickle
 IP = socket.gethostbyname(socket.gethostname())
 ADDR = (IP, PORT)
-MSG_SIZE = 1024
+MSG_SIZE = 4096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"
 
