@@ -126,7 +126,7 @@ class Client:
             self.other_ponds.pop(msg_object.pondName)
 
             # time.sleep(10)
-        print(self.other_ponds, self.disconnected_ponds)
+        # print(self.other_ponds, self.disconnected_ponds)
         return msg
 
         # if msg[:7] == "MIGRATE":

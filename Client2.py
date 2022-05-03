@@ -133,8 +133,8 @@ class Client:
         #     return msg
 if __name__ == "__main__":
 
-    f1 = FishData("sick-salmon","123456")
-    f2 = FishData("pla","123456")
+    f1 = FishData("pla","123456")
+    f2 = FishData("pla","321412")
     f3 = FishData("pla","123456")
     p = PondData("pla")
     p.addFish(f1)

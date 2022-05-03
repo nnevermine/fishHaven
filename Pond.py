@@ -1,5 +1,6 @@
 import enum
 from re import S
+from turtle import update
 from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
@@ -56,6 +57,7 @@ class Pond:
         
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
                 newFish = Fish(50, randint(50, 650), self.name, f.getId())
+                print("CHILD FISH")
                 self.addFish( newFish)
                 # self.pondData.addFish( newFish.fishData)
                 
@@ -76,41 +78,71 @@ class Pond:
     
     def removeFish(self, fish):
         self.fishes.remove(fish)
+        for f in self.pondData.fishes:
+            if f.id == fish.getId():
+                self.pondData.fishes.remove(f)
+                break
+        self.network.pond = self.pondData
         self.moving_sprites.remove(fish)
 
     def update(self, injectPheromone = False):
         for ind, f in enumerate( self.fishes): #checkout all the fish in the pond
             f.updateLifeTime() # decrease life time by 1 sec
+            if f.fishData.status == "dead":
+                self.removeFish(f)
+                continue
             self.pondData.setFish(f.fishData)
-
-            if f.getGenesis() != self.name and f.in_pond_sec >= 5:
-                newFish = Fish(50, 50,f.fishData.genesis, f.fishData.id)
-                self.addFish( newFish )
-                # self.pondData.addFish( newFish.fishData )
-            elif f.getGenesis() == self.name and f.in_pond_sec <= 15:
-                if random.getrandbits(1):
-                    dest = random.choice(self.network.other_ponds.keys())
+            
+            if len(self.network.other_ponds.keys()) > 0:
+                # print( f.getId(), f.in_pond_sec)
+                if f.getGenesis() != self.name and f.in_pond_sec >= 5 and not f.gaveBirth:
+                    newFish = Fish(50, 50,f.fishData.genesis, f.fishData.id)
+                    newFish.giveBirth() ## not allow baby fish to breed
+                    print("MIGRATED IN POND FOR 5 SECS")
+                    self.addFish( newFish )
+                    f.giveBirth()
+            
+                    # self.pondData.addFish( newFish.fishData )
+                if f.getGenesis() == self.name and f.in_pond_sec <= 15:
+                    if random.getrandbits(1):
+                        print('OTHER POND >>> ',self.network.other_ponds.keys())
+                        dest = random.choice(list(self.network.other_ponds.keys()))
+                        self.migrateFish( ind, dest )
+                        # self.network.migrate_fish(f, dest)
+                        # self.pondData.migrateFish(f.getId())
+                        parent = None
+                        if f.fishData.parentId:
+                            parent = f.fishData.parentId
+                        for ind2, f2 in enumerate(self.fishes):
+                            if parent and f2.fishData.parentId == parent or f2.fishData.parentId == f.getId():
+                                self.migrateFish( ind2, dest)
+                                # self.network.migrate_fish( f2, dest)
+                                # self.pondData.migrateFish(f2.getId())
+                                break
+                        continue
+                elif f.getGenesis() == self.name and f.in_pond_sec >= 15:
+                    dest = random.choice(list(self.network.other_ponds.keys()))
                     self.migrateFish( ind, dest )
                     # self.network.migrate_fish(f, dest)
                     # self.pondData.migrateFish(f.getId())
                     parent = None
-                    if f.parentId:
-                        parent = f.parentId
+                    if f.fishData.parentId:
+                        parent = f.fishData.parentId
                     for ind2, f2 in enumerate(self.fishes):
-                        if parent and f2.fishData.parentId == parent or f2.fishData.parentId == f.id:
+                        if parent and f2.fishData.parentId == parent or f2.fishData.parentId == f.getId():
                             self.migrateFish( ind2, dest)
                             # self.network.migrate_fish( f2, dest)
                             # self.pondData.migrateFish(f2.getId())
                             break
                     continue
-            else :
-                dest = random.choice(self.network.other_ponds.keys())
-                if self.getPopulation() > f.getCrowdThresh():
-                    
-                    self.migrateFish( ind, dest )
-                    # self.network.migrate_fish(f, dest )
-                    # self.pondData.migrateFish( f.fishData.id )
-                continue
+                else :
+                    dest = random.choice(list(self.network.other_ponds.keys()))
+                    if self.getPopulation() > f.getCrowdThresh():
+                        
+                        self.migrateFish( ind, dest )
+                        # self.network.migrate_fish(f, dest )
+                        # self.pondData.migrateFish( f.fishData.id )
+                    continue
             
         if ( injectPheromone ):
             self.pheromoneCloud()
@@ -126,8 +158,8 @@ class Pond:
         
         self.network = Client(self.pondData)
         # self.msg = self.network.get_msg()
-        # msg_handler = threading.Thread(target=self.network.get_msg)
-        # msg_handler.start()
+        msg_handler = threading.Thread(target=self.network.get_msg)
+        msg_handler.start()
         send_handler = threading.Thread(target=self.network.send_pond)
         send_handler.start()
 
@@ -140,11 +172,11 @@ class Pond:
         clock = pygame.time.Clock()
         start_time = pygame.time.get_ticks()
         pregnant_time = pygame.time.get_ticks()
-        send_data_time = pygame.time.get_ticks()
+        update_time = pygame.time.get_ticks()
         self.addFish(Fish(10,100))
 
-        self.addFish(Fish(10,140, genesis="peem"))
-        self.addFish(Fish(100,200, genesis="dang"))
+        # self.addFish(Fish(10,140, genesis="peem"))
+        # self.addFish(Fish(100,200, genesis="dang"))
 
         app = QApplication(sys.argv)
 
@@ -172,13 +204,15 @@ class Pond:
             # print("pond: ", self.pondData)
             # self.msg = self.network.send_pond()
            # print(self.msg.data)
-            self.msg = self.network.messageQ.pop()
-            if (self.msg.action == "MIGRATE"):
-                newFish = Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
-                self.addFish(newFish)
+            if len(self.network.messageQ) > 0:
+                self.msg = self.network.messageQ.pop()
+                if (self.msg.action == "MIGRATE"):
+                    newFish = Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
+                    print("ADD MIGRATED FISH")
+                    self.addFish(newFish)
 
-                # self.pondData.addFish(newFish.fishData)
-                self.network.pondData = self.pondData
+                    # self.pondData.addFish(newFish.fishData)
+                    self.network.pondData = self.pondData
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
@@ -191,7 +225,12 @@ class Pond:
             
             time_since_enter = pygame.time.get_ticks() - start_time
             time_since_new_birth = pygame.time.get_ticks() - pregnant_time
-            time_since_last_data_send = pygame.time.get_ticks() - send_data_time
+            time_since_update = pygame.time.get_ticks() - update_time
+            if (time_since_update > 1000):
+                self.update()
+                print(self.fishes)
+                update_time = pygame.time.get_ticks()
+
             if (time_since_new_birth > 6000):
                 self.pheromoneCloud()
                 pregnant_time = pygame.time.get_ticks()
@@ -206,8 +245,8 @@ class Pond:
                 self.removeFish(deadFish)
                 deadFish.die()
                 start_time = pygame.time.get_ticks()
-
-            print(len(self.fishes))
+            
+            # print(len(self.fishes))
 
             # if time_since_last_data_send > 2000:
             #     pass

@@ -29,6 +29,7 @@ class Fish(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
         self.in_pond_sec = 0
+        self.gaveBirth = False
 
     def getFishData(self):
         return self.fishData
@@ -134,3 +135,8 @@ class Fish(pygame.sprite.Sprite):
     def getGenesis(self):
         return self.fishData.genesis
 
+    def getCrowdThresh(self):
+            return self.fishData.crowdThreshold
+
+    def giveBirth(self):
+        self.gaveBirth = True
