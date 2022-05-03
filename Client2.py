@@ -123,25 +123,25 @@ if __name__ == "__main__":
 
     f1 = FishData("Sick Salmon","123456")
     # f2 = FishData("Fish2","123456")
-    f3 = FishData("pla","324221")
-    f4 = FishData("pla","324123")
+    # f3 = FishData("pla","324221")
+    # f4 = FishData("pla","324123")
 
     p = PondData("pla")
     p.addFish(f1)
     # p.addFish(f2)
-    p.addFish(f3)
-    p.addFish(f4)
+    # p.addFish(f3)
+    # p.addFish(f4)
     connected = True
     c = Client(p)    
     c.send_pond()
     time.sleep(3)
-    print('fishes',p.fishes)
-    c.migrate_fish(p.fishes[1],"sick-salmon")
-    time.sleep(7)
-    print('fishes',p.fishes)
+    # print('fishes',p.fishes)
+    c.migrate_fish(p.fishes[0],"sick-salmon")
+    # time.sleep(7)
+    # print('fishes',p.fishes)
 
-    c.migrate_fish(p.fishes[1],"sick-salmon")
-    time.sleep(3)
+    # c.migrate_fish(p.fishes[1],"sick-salmon")
+    # time.sleep(3)
 
     # c.migrate_fish(p.fishes[3],"sick-salmon")
 
