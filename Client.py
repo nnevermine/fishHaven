@@ -11,7 +11,7 @@ from PondData import PondData
 from Payload import Payload
 import pickle
 from server import PORT
-IP = "0.tcp.ap.ngrok.io"
+IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
 
 ADDR = (IP,PORT)#19777
 MSG_SIZE = 4096
