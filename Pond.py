@@ -1,6 +1,6 @@
 import enum
 from re import S
-from turtle import update
+# from turtle import update
 from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
@@ -96,7 +96,7 @@ class Pond:
             if len(self.network.other_ponds.keys()) > 0:
                 # print( f.getId(), f.in_pond_sec)
                 if f.getGenesis() != self.name and f.in_pond_sec >= 5 and not f.gaveBirth:
-                    newFish = Fish(50, 50,f.fishData.genesis, f.fishData.id)
+                    newFish = Fish(50,randint(50, 650),f.fishData.genesis, f.fishData.id)
                     newFish.giveBirth() ## not allow baby fish to breed
                     print("MIGRATED IN POND FOR 5 SECS")
                     self.addFish( newFish )
@@ -183,9 +183,10 @@ class Pond:
         running = True
         while running:
 
-            if len(self.fishes) > 20:
-                kill = randint(0, len(self.fishes) - 1)
-                self.removeFish(self.fishes[kill])
+            if len(self.fishes) > 15:
+                while(len(self.fishes)>16):
+                    kill = randint(0, len(self.fishes) - 1)
+                    self.removeFish(self.fishes[kill])
                 # self.fishes[kill].die()
 
             # print(self.network.get_msg())
@@ -207,7 +208,7 @@ class Pond:
             if len(self.network.messageQ) > 0:
                 self.msg = self.network.messageQ.pop()
                 if (self.msg.action == "MIGRATE"):
-                    newFish = Fish(50, 50, self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
+                    newFish = Fish(50, randint(50, 650), self.msg.data['fish'].genesis, self.msg.data['fish'].parentId)
                     print("ADD MIGRATED FISH")
                     self.addFish(newFish)
 
@@ -231,20 +232,21 @@ class Pond:
                 print(self.fishes)
                 update_time = pygame.time.get_ticks()
 
-            if (time_since_new_birth > 6000):
+            if (time_since_new_birth > 5000):
                 self.pheromoneCloud()
                 pregnant_time = pygame.time.get_ticks()
 
             #shark every 30 seconds
-            if time_since_enter > 17500:
-                deadFish = self.randomShark()
-                screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
-                pygame.display.flip()
-                pygame.event.pump()
-                pygame.time.delay(500)
-                self.removeFish(deadFish)
-                deadFish.die()
-                start_time = pygame.time.get_ticks()
+            if time_since_enter > 7000:
+                if len(self.fishes)>1:
+                    deadFish = self.randomShark()
+                    screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
+                    pygame.display.flip()
+                    pygame.event.pump()
+                    pygame.time.delay(500)
+                    self.removeFish(deadFish)
+                    deadFish.die()
+                    start_time = pygame.time.get_ticks()
             
             # print(len(self.fishes))
 
