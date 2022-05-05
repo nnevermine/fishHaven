@@ -29,7 +29,7 @@ class Dashboard(QMainWindow):
         j=0
         temp=0
         i=0
-        label = QLabel("Population : "+ str(len((self.fished) / self.allPondsNum) * 100 ) + "%",self)
+        label = QLabel("Population : "+ str((len(self.fished) / self.allPondsNum) * 100 ) + "%",self)
 
         for r in range(0,num): 
             print("out", i, temp, j)

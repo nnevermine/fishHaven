@@ -102,6 +102,20 @@ class Client:
         except socket.error as e:
             print(e)
 
+    def handle_lifetime( self ):
+        while True:
+            if (len(self.other_ponds.keys()) > 0):
+                for k, v in self.other_ponds.items():
+                    temp = self.other_ponds[k].fishes
+                    for i in range(len(temp)):
+                        temp[i].lifetime -= 1
+                    self.other_ponds[k].fishes = []
+                    for i in range(len(temp)):
+                        if (temp[i].lifetime > 0):
+                            self.other_ponds[k].fishes.append(temp[i])
+
+            time.sleep(1)
+
     def handle_msg(self, msg):
         msg_action = msg.action
         msg_object = msg.data

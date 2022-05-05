@@ -166,6 +166,8 @@ class Pond:
         msg_handler.start()
         send_handler = threading.Thread(target=self.network.send_pond)
         send_handler.start()
+        lifetime_handler = threading.Thread(target=self.network.handle_lifetime)
+        lifetime_handler.start()
 
         pygame.init()
         screen = pygame.display.set_mode((1280, 720))
