@@ -29,8 +29,11 @@ class Dashboard(QMainWindow):
         j=0
         temp=0
         i=0
-        label = QLabel("Population : "+ str(len(self.fished)) + "/" + str(self.allPondsNum),self)
-
+        label = QLabel("Vivi Population : "+ str(len(self.fished)) + "/" + str(self.allPondsNum),self)
+        font = label.font();
+        font.setPointSize(40);
+        font.setBold(True);
+        label.setFont(font);
         for r in range(0,num): 
             print("out", i, temp, j)
             while j < 2 and i < num:       
@@ -57,7 +60,7 @@ class Dashboard(QMainWindow):
 
         self.setCentralWidget(self.scroll)
 
-        self.setGeometry(80, 90, 1280, 720)
+        self.setGeometry(80, 90, 500, 720)
         self.setWindowTitle('Dashboard')
         self.show()
 

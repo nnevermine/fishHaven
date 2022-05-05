@@ -11,9 +11,11 @@ from PondData import PondData
 from Payload import Payload
 import pickle
 from server import PORT
-IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
+# IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
+IP = "0.tcp.ap.ngrok.io"
 
-ADDR = (IP,PORT)#19777
+ADDR = (IP,18448)#19777
+# ADDR = (IP, PORT)
 MSG_SIZE = 4096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"
@@ -33,7 +35,7 @@ class Client:
         self.messageQ = []
 
     def get_msg(self):
-        while True:
+        while self.connected:
             time.sleep(0.5)
             msg = pickle.loads(self.client.recv(MSG_SIZE))
             if(msg):
@@ -52,7 +54,7 @@ class Client:
 
     def send_pond(self):
         try:
-            while True:
+            while self.connected:
                 time.sleep(2)
                 self.payload.action = "SEND"
                 self.payload.data = self.pond
@@ -94,6 +96,7 @@ class Client:
     
     def disconnect(self) :
         try:
+            self.connected = False
             self.payload.action = DISCONNECT_MSG
             print("Disconnecting...")
             self.client.send(pickle.dumps(self.payload))
@@ -103,7 +106,7 @@ class Client:
             print(e)
 
     def handle_lifetime( self ):
-        while True:
+        while self.connected:
             if (len(self.other_ponds.keys()) > 0):
                 for k, v in self.other_ponds.items():
                     temp = self.other_ponds[k].fishes

@@ -256,7 +256,7 @@ class Pond:
 
             #shark every 15 seconds
             if time_since_enter > 15000:
-                if len(self.fishes)>1:
+                if len(self.fishes)>4:
                     deadFish = self.randomShark()
                     screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
                     pygame.display.flip()
