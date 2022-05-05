@@ -206,7 +206,7 @@ class Pond:
                         pond_handler = threading.Thread(target=app.exec_)
                         pond_handler.start()
                     elif event.key == pygame.K_LEFT:
-                        for pondName in list(self.network.other_ponds.key()):
+                        for pondName in list(self.network.other_ponds.keys()):
                             other_pond_list.append(self.network.other_ponds.get(pondName))
                         pd = PondDashboard(other_pond_list)
                         pond_handler = threading.Thread(target=app.exec_)

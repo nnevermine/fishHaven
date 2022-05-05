@@ -47,6 +47,6 @@ class FishData:
 
     def __str__(self):
         if self.parentId:
-            return self.id + " " + self.parentId + "\n"
+            return self.id + " Genesis: " + self.genesis + " Parent: " + self.parentId + " Lifetime: " + str(self.lifetime)
         else:
-            return self.id + "\n"    
+            return self.id + " Genesis: " + self.genesis + " Lifetime: " + str(self.lifetime)

@@ -32,7 +32,8 @@ class Dashboard(QMainWindow):
             print("out", i, temp, j)
             while j < 2 and i < num:       
                 print("here", i, temp, j)
-                info = [self.fished[i].getFishData().getId(), self.fished[i].getFishData().getState(), self.fished[i].getFishData().getStatus(), self.fished[i].getFishData().getGenesis()]
+                info = [self.fished[i].getFishData().getId(), self.fished[i].getFishData().getState(), 
+                self.fished[i].getFishData().getStatus(), self.fished[i].getFishData().getGenesis(), str(self.fished[i].getFishData().lifetime)]
                 self.grid.addWidget(FishFrame(info, self.widget), temp, j)
                 i+=1     
                 j+=1
