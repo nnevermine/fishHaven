@@ -31,7 +31,7 @@ class PondDashboard(QMainWindow):
             # print("out", i, temp, j)
             while j < 2 and i < num:       
                 # print("here", i, temp, j)
-                info = [self.ponds[i].getPondData().getPondName(), self.ponds[i].getPonData().getPopulation()]
+                info = [self.ponds[i].getPondData().getPondName(), self.ponds[i].getPondData().getPopulation()]
                 self.grid.addWidget(PondFrame(info, self.widget), temp, j)
                 i+=1     
                 j+=1
