@@ -11,11 +11,12 @@ from PondData import PondData
 from Payload import Payload
 import pickle
 from server import PORT
-IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
-# IP = "0.tcp.ap.ngrok.io"
+IP = "0.tcp.ap.ngrok.io"
 
-# ADDR = (IP,18448)#19777
-ADDR = (IP, PORT)
+ADDR = (IP,18448)#19777
+# IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
+
+# ADDR = (IP, PORT)
 MSG_SIZE = 4096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"

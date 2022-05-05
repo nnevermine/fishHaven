@@ -29,9 +29,9 @@ class Dashboard(QMainWindow):
         j=0
         temp=0
         i=0
-        label = QLabel("Vivi Population : "+ str(len(self.fished)) + "/" + str(self.allPondsNum),self)
+        label = QLabel("Vivi Population : "+ str(len(self.fished)) + "/" + str(self.allPondsNum) + " (" + str(int((len(self.fished)/self.allPondsNum) * 100)) + "%)",self)
         font = label.font();
-        font.setPointSize(40);
+        font.setPointSize(30);
         font.setBold(True);
         label.setFont(font);
         for r in range(0,num): 

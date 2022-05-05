@@ -17,13 +17,13 @@ class FishFrame(QGroupBox):
         pixmap = QPixmap('./assets/images/sprites/local-pond/1.png')
         label = QLabel(self)
 
-        if info[3] == "sick-salmon":
+        if info[3].lower() == "sick-salmon":
             pixmap = QPixmap('./assets/images/sprites/local-pond/1.png')
-        elif info[3] == "peem":
+        elif info[3].lower() == "peem":
             pixmap = QPixmap('./assets/images/sprites/foreign-pond/1.png')
-        elif info[3] == "dang":
+        elif info[3].lower() == "dang":
             pixmap = QPixmap('./assets/images/sprites/dang.png')
-        elif info[3] == "pla":
+        elif info[3].lower() == "pla":
             pixmap = QPixmap('./assets/images/sprites/plafish.png')
 
         pixmap = pixmap.scaled(low_rez)
