@@ -58,6 +58,7 @@ class Client:
                 time.sleep(2)
                 self.payload.action = "SEND"
                 self.payload.data = self.pond
+                print("POND >>>>> "+ str(self.pond))
                 #print("Client send :",self.pond)
                 self.client.send(pickle.dumps(self.payload))
                 #msg =  pickle.loads(self.client.recv(MSG_SIZE))

@@ -6,7 +6,7 @@ class PondData:
     def __str__(self):
         fishId = ""
         for f in self.fishes:
-            # fishId += f.getId() + " "
+            fishId += f.getId() + " "
             print(f)
         return self.pondName + " " + fishId
     

@@ -77,7 +77,7 @@ class Pond:
         self.fishes.append(newFishData)
         self.pondData.addFish(newFishData.fishData)
         self.moving_sprites.add(newFishData)
-        self.network.pondData = self.pondData
+        self.network.pond = self.pondData
 
     
     def removeFish(self, fish):
@@ -231,7 +231,7 @@ class Pond:
                     self.addFish(newFish)
 
                     # self.pondData.addFish(newFish.fishData)
-                    self.network.pondData = self.pondData
+                    self.network.pond = self.pondData
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
