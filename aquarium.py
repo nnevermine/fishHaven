@@ -3,9 +3,11 @@
 import pygame
 import sys
 import random
-
+import os
 # from src.Fish import Fish
 from Pond import Pond
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (1000,290)
+
 pond = Pond()
 pond.run()
 

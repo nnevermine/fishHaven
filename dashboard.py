@@ -60,7 +60,7 @@ class Dashboard(QMainWindow):
 
         self.setCentralWidget(self.scroll)
 
-        self.setGeometry(80, 90, 500, 720)
+        self.setGeometry(0, 290, 500, 700)
         self.setWindowTitle('Dashboard')
         self.show()
 
