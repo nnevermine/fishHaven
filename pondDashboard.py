@@ -51,8 +51,8 @@ class PondDashboard(QMainWindow):
 
         self.setCentralWidget(self.scroll)
 
-        self.setGeometry(80, 90, 1280, 720)
-        self.setWindowTitle('Dashboard')
+        self.setGeometry(80, 90, 800, 600)
+        self.setWindowTitle('Pond Dashboard')
         self.show()
 
         return
