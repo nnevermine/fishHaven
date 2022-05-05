@@ -80,8 +80,8 @@ class Client:
             ### Handle our fish in the pond
             # // TO BE IMPLEMENTED
 
-            msg =  pickle.loads(self.client.recv(MSG_SIZE))
-            return self.handle_msg(msg)
+            # msg =  pickle.loads(self.client.recv(MSG_SIZE))
+            # return self.handle_msg(msg)
             
 
             # print("Client send :",pond)
