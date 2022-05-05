@@ -5,6 +5,7 @@ from PondData import PondData
 from Fish import Fish
 # from run import Dashboard
 from dashboard import Dashboard
+from pondDashboard import PondDashboard
 from random import randint
 from FishData import FishData
 
@@ -31,6 +32,9 @@ class Pond:
         self.network = None
         self.sharkTime = 0
         self.displayShark = False
+
+    def getPondData(self):
+        return self.pondData
 
     def getPopulation(self):
         return len(self.fishes)
@@ -179,6 +183,7 @@ class Pond:
         # self.addFish(Fish(100,200, genesis="dang"))
 
         app = QApplication(sys.argv)
+        other_pond_list = []
 
         running = True
         while running:
@@ -200,6 +205,14 @@ class Pond:
                         d = Dashboard(self.fishes)
                         pond_handler = threading.Thread(target=app.exec_)
                         pond_handler.start()
+                    elif event.key == pygame.K_LEFT:
+                        for pondName in list(self.network.other_ponds.key()):
+                            other_pond_list.append(self.network.other_ponds.get(pondName))
+                        pd = PondDashboard(other_pond_list)
+                        pond_handler = threading.Thread(target=app.exec_)
+                        pond_handler.start()
+                        
+            other_pond_list = []
 
             # print("POND:"+self.msg.__str__())
             # print("pond: ", self.pondData)

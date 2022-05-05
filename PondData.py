@@ -10,6 +10,12 @@ class PondData:
             print(f)
         return self.pondName + " " + fishId
     
+    def getPondName(self):
+        return self.pondName
+
+    def getPopulation(self):
+        return len(self.fishes)
+
     def addFish(self, fishData):
         for i in range(len(self.fishes)):
             if self.fishes[i].id == fishData.id:
