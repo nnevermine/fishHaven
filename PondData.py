@@ -8,7 +8,7 @@ class PondData:
         for f in self.fishes:
             fishId += f.getId() + " "
             print(f)
-        return self.pondName + " " + fishId
+        return self.pondName + " " + str(len(self.fishes))
     
     def getPondName(self):
         return self.pondName

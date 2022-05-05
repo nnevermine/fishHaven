@@ -55,12 +55,13 @@ class Client:
     def send_pond(self):
         try:
             while self.connected:
-                time.sleep(2)
                 self.payload.action = "SEND"
                 self.payload.data = self.pond
-                print("POND >>>>> "+ str(self.pond))
+                print("POND >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+ str(self.pond))
                 #print("Client send :",self.pond)
                 self.client.send(pickle.dumps(self.payload))
+                time.sleep(2)
+
                 #msg =  pickle.loads(self.client.recv(MSG_SIZE))
                 #return self.handle_msg(msg)
 

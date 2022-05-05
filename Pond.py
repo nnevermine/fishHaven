@@ -69,9 +69,15 @@ class Pond:
 
     def migrateFish(self, fishIndex, destination):
         # destination = random.choice(self.network.other_ponds.keys())
-        self.pondData.migrateFish(self.fishes[fishIndex].getId())
-        self.network.migrate_fish(self.fishes[fishIndex].fishData, destination )
-    #---------------implement---------------#
+        print("---------------------------FISH SHOULD BE REMOVED BY MIGRATE-------------------------")
+
+        temp = self.fishes[fishIndex]
+        self.fishes.pop(fishIndex)
+        self.moving_sprites.remove(temp)
+        self.pondData.migrateFish(temp.getId())
+        self.network.migrate_fish(temp.fishData, destination )
+
+    #---------------implement---------------#``
 
     def addFish(self, newFishData): #from another pond
         self.fishes.append(newFishData)
@@ -82,8 +88,10 @@ class Pond:
     
     def removeFish(self, fish):
         self.fishes.remove(fish)
+        print("---------------------------FISH SHOULD BE REMOVED-------------------------")
         for f in self.pondData.fishes:
             if f.id == fish.getId():
+                print("---------------------------REMOVE FISH FROM POND DATA-------------------------")
                 self.pondData.fishes.remove(f)
                 break
         self.network.pond = self.pondData
@@ -102,14 +110,14 @@ class Pond:
                 if f.getGenesis() != self.name and f.in_pond_sec >= 5 and not f.gaveBirth:
                     newFish = Fish(50,randint(50, 650),f.fishData.genesis, f.fishData.id)
                     newFish.giveBirth() ## not allow baby fish to breed
-                    print("MIGRATED IN POND FOR 5 SECS")
+                    print("ADD FISH MIGRATED IN POND FOR 5 SECS")
                     self.addFish( newFish )
                     f.giveBirth()
             
                     # self.pondData.addFish( newFish.fishData )
                 if f.getGenesis() == self.name and f.in_pond_sec <= 15:
                     if random.getrandbits(1):
-                        print('OTHER POND >>> ',self.network.other_ponds.keys())
+                        # print('OTHER POND >>> ',self.network.other_ponds.keys())
                         dest = random.choice(list(self.network.other_ponds.keys()))
                         self.migrateFish( ind, dest )
                         # self.network.migrate_fish(f, dest)
@@ -203,7 +211,7 @@ class Pond:
                     running = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        print(self.fishes[0].getId())
+                        # print(self.fishes[0].getId())
                         allPondsNum = len(self.fishes)
                         for p in self.network.other_ponds.values():
                             allPondsNum += p.getPopulation()
@@ -231,7 +239,7 @@ class Pond:
                     self.addFish(newFish)
 
                     # self.pondData.addFish(newFish.fishData)
-                    self.network.pond = self.pondData
+                    # self.network.pond = self.pondData
                     
             screen.fill((0, 0, 0))
             screen.blit(bg,[0,0])
@@ -247,7 +255,7 @@ class Pond:
             time_since_update = pygame.time.get_ticks() - update_time
             if (time_since_update > 1000):
                 self.update()
-                print(self.fishes)
+                # print(self.fishes)
                 update_time = pygame.time.get_ticks()
 
             if (time_since_new_birth > 5000):
