@@ -9,9 +9,10 @@ from fishFrame import FishFrame
 
 class Dashboard(QMainWindow):
 
-    def __init__(self, allFish=None):
+    def __init__(self, allFish=None, allPondsNum=None):
         super().__init__()
         self.fished = allFish
+        self.allPondsNum = allPondsNum
         print(self.fished[0].getId())
         self.initUI()
 
@@ -28,6 +29,8 @@ class Dashboard(QMainWindow):
         j=0
         temp=0
         i=0
+        label = QLabel("Population : "+ str(len((self.fished) / self.allPondsNum) * 100 ) + "%",self)
+
         for r in range(0,num): 
             print("out", i, temp, j)
             while j < 2 and i < num:       
@@ -42,7 +45,6 @@ class Dashboard(QMainWindow):
             
 
         self.widget.setLayout(self.grid)
-       
 
 
         #Scroll Area Properties

@@ -202,7 +202,10 @@ class Pond:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         print(self.fishes[0].getId())
-                        d = Dashboard(self.fishes)
+                        allPondsNum = len(self.fishes)
+                        for p in self.network.other_ponds.values():
+                            allPondsNum += p.getPopulation()
+                        d = Dashboard(self.fishes, allPondsNum)
                         pond_handler = threading.Thread(target=app.exec_)
                         pond_handler.start()
                     elif event.key == pygame.K_LEFT:
