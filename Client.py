@@ -11,11 +11,11 @@ from PondData import PondData
 from Payload import Payload
 import pickle
 from server import PORT
-# IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
-IP = "0.tcp.ap.ngrok.io"
+IP = socket.gethostbyname(socket.gethostname())#"0.tcp.ap.ngrok.io"
+# IP = "0.tcp.ap.ngrok.io"
 
-ADDR = (IP,18448)#19777
-# ADDR = (IP, PORT)
+# ADDR = (IP,18448)#19777
+ADDR = (IP, PORT)
 MSG_SIZE = 4096
 FORMAT = "utf-8"
 DISCONNECT_MSG = "!DISCONNECT"
@@ -135,7 +135,7 @@ class Client:
         elif(msg_action == "MIGRATE"):
             if(self.pond.pondName == msg_object["destination"]):
                 print("=======RECIEVED MIGRATION=======")
-                self.pond.addFish(msg_object["fish"])
+                # self.pond.addFish(msg_object["fish"])
                 print(self.pond.fishes)
                 print("================================")
         

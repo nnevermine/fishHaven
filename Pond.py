@@ -72,9 +72,11 @@ class Pond:
         print("---------------------------FISH SHOULD BE REMOVED BY MIGRATE-------------------------")
 
         temp = self.fishes[fishIndex]
-        self.fishes.pop(fishIndex)
-        self.moving_sprites.remove(temp)
-        self.pondData.migrateFish(temp.getId())
+        # self.fishes.pop(fishIndex)
+        # self.moving_sprites.remove(temp)
+        # self.pondData.migrateFish(temp.getId())
+        # self.network.pond = self.pondData
+        self.removeFish(temp)
         self.network.migrate_fish(temp.fishData, destination )
 
     #---------------implement---------------#``

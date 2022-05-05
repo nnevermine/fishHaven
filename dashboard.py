@@ -13,7 +13,7 @@ class Dashboard(QMainWindow):
         super().__init__()
         self.fished = allFish
         self.allPondsNum = allPondsNum
-        print(self.fished[0].getId())
+        # print(self.fished[0].getId())
         self.initUI()
 
     def initUI(self):
@@ -24,7 +24,7 @@ class Dashboard(QMainWindow):
         self.grid = QGridLayout()
 
         # temp = ["Fish ID: 123", "State: In Pond", "Status: alive", "Genesis: Sick-Salmon", "Crowd Threshold: 5/10", "Pheromone Level: 4/5", "Lifetime: 30/60"]
-        print(self.fished[0].getFishData().getGenesis())
+        # print(self.fished[0].getFishData().getGenesis())
         num = len(self.fished)
         j=0
         temp=0
