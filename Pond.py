@@ -60,7 +60,7 @@ class Pond:
             f.increasePheromone(pheromone)
         
             if f.isPregnant(): ## check that pheromone >= pheromone threshold
-                newFish = Fish(50, randint(50, 650), self.name, f.getId())
+                newFish = Fish(50, randint(50, 650), f.getGenesis(), f.getId())
                 print("CHILD FISH")
                 self.addFish( newFish)
                 # self.pondData.addFish( newFish.fishData)
@@ -252,8 +252,8 @@ class Pond:
                 self.pheromoneCloud()
                 pregnant_time = pygame.time.get_ticks()
 
-            #shark every 30 seconds
-            if time_since_enter > 7000:
+            #shark every 15 seconds
+            if time_since_enter > 15000:
                 if len(self.fishes)>1:
                     deadFish = self.randomShark()
                     screen.blit(self.sharkImage, (deadFish.getFishx()+30, deadFish.getFishy()))
