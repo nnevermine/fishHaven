@@ -29,7 +29,7 @@ class Dashboard(QMainWindow):
         j=0
         temp=0
         i=0
-        label = QLabel("Population : "+ str(len((self.fished) / self.allPondsNum) * 100 ) + "%",self)
+        label = QLabel("Population : "+ str(len(self.fished)) + "/" + str(self.allPondsNum),self)
 
         for r in range(0,num): 
             print("out", i, temp, j)
@@ -43,8 +43,10 @@ class Dashboard(QMainWindow):
             j=0
             temp+=1
             
+        self.vbox.addWidget(label)
+        self.vbox.addLayout(self.grid)
 
-        self.widget.setLayout(self.grid)
+        self.widget.setLayout(self.vbox)
 
 
         #Scroll Area Properties
