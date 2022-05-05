@@ -22,8 +22,10 @@ class PondDashboard(QMainWindow):
         self.grid = QGridLayout()
 
         # temp = ["Fish ID: 123", "State: In Pond", "Status: alive", "Genesis: Sick-Salmon", "Crowd Threshold: 5/10", "Pheromone Level: 4/5", "Lifetime: 30/60"]
-        print(self.fished[0].getFishData().getGenesis())
-        num = len(self.fished)
+        # print(self.fishe[0].getFishData().getGenesis())
+        # num = len(self.fished)
+        num = len(self.ponds)
+
         i, j, temp = 0, 0, 0
         for r in range(0,num): 
             # print("out", i, temp, j)
